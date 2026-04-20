@@ -1,0 +1,468 @@
+/* Admin-Dashboard/css/posts.css */
+
+.content-left > h3 { /* This is for "Recent Posts" heading */
+  font-size: 2rem;
+}
+
+/* Create Post Section */
+.create-post {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  border-left: 5px solid var(--black);
+  margin-top: 0;
+  margin-bottom: 0;
+  box-sizing: border-box; /* Crucial for width calculations */
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.post-input {
+  display: flex;
+  /* Removed gap: 1rem; to bring textarea closer to left edge if avatar is gone */
+}
+
+/* .create-post-avatar is now removed from HTML */
+/* No need for .create-post-avatar and img styles here */
+
+.post-input-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.post-input textarea {
+  width: 100%;
+  height: 80px;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1.4rem;
+  resize: none;
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allows content within to shrink */
+}
+
+.post-options {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 0; /* Allows flex item to shrink */
+}
+
+.post-options select {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1.3rem;
+  background-color: var(--white);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.post-options select:hover {
+  border-color: var(--text-secondary);
+  color: var(--black);
+}
+
+.post-options select:focus {
+  border-color: var(--black);
+  outline: none;
+}
+
+/* Modified .photo-upload for a more modern/minimal button */
+.new-photo-upload-btn { /* New class for the updated button */
+  display: inline-flex; /* Use inline-flex to center content */
+  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  gap: 0.8rem; /* Slightly more space between icon and text */
+  padding: 0.8rem 1.5rem; /* Increased padding */
+  background-color: var(--black); /* Solid background */
+  color: var(--white); /* White text/icon */
+  border: none; /* No border */
+  border-radius: 6px; /* Slightly more rounded corners */
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smoother transition */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow */
+}
+
+.new-photo-upload-btn:hover {
+  background-color: #333; /* Darker on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Enhanced shadow on hover */
+}
+
+.new-photo-upload-btn i {
+  font-size: 1.6rem; /* Slightly larger icon */
+}
+
+.new-photo-upload-btn span {
+    color: var(--white); /* Ensure text is white */
+    font-weight: 500;
+}
+
+.photo-upload input {
+  display: none;
+}
+
+.post-button {
+  padding: 0.8rem 2rem;
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.post-button:hover {
+  background-color: var(--text-color);
+}
+
+.post-button:active {
+  background-color: var(--black);
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Posts Feed Section */
+.posts-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.posts-feed h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.post {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allow flex item to shrink */
+  overflow: hidden; /* Hide anything that might overflow its own box */
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.user-avatar {
+  margin-right: 1rem;
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.user-avatar img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.post-meta {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.meta-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.3rem;
+  position: relative;
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.post-meta h4 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--black);
+  margin: 0;
+  min-width: 0; /* Ensure text can shrink */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Keep name on single line */
+}
+
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  top: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  flex-shrink: 0; /* Prevent tag from shrinking */
+}
+
+.category-tag:hover {
+  background-color: var(--text-color);
+}
+
+.timestamp {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.post-content {
+  margin-top: 0.8rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allows content within to shrink */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.post-content p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  margin: 0;
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.post-image {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px;
+  margin-top: 1.2rem;
+  border: 1px solid var(--border-color);
+  display: block; /* Remove extra space below image */
+  object-fit: contain; /* Ensure image fits without cropping */
+  min-width: 0; /* Allows image to shrink */
+}
+
+.post-engagement {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-divider {
+  height: 1px;
+  background-color: #e4e6eb;
+  margin: 1rem 0 0.5rem 0;
+  width: 100%;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid transparent;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  flex: 1;
+  min-width: 0; /* Allow button to shrink */
+}
+
+.action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--black);
+  border-color: var(--border-color);
+}
+
+.action-btn:active {
+  background-color: var(--border-color);
+}
+
+.mdi-thumb-up-outline,
+.mdi-thumb-up,
+.mdi-comment-outline,
+.mdi-comment {
+  color: var(--black) !important;
+}
+
+/* New: Comment Section Styles */
+.comment-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.comment-input-area {
+    display: flex;
+    align-items: flex-start; /* Align avatar and textarea top */
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    min-width: 0; /* Allow flex item to shrink */
+}
+
+.comment-input-area .comment-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+    border: 1px solid var(--border-color);
+}
+
+.comment-textarea {
+    flex: 1; /* Take up remaining space */
+    width: 100%; /* Ensure it fills its flex container */
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 18px; /* More rounded for comment input */
+    font-family: inherit;
+    font-size: 1.4rem;
+    resize: none; /* Auto-resize handled by JS */
+    min-height: 3.5rem; /* Min height matches avatar */
+    max-height: 10rem; /* Prevent excessive growth */
+    overflow-y: hidden; /* Hide scrollbar for auto-resize */
+    box-sizing: border-box; /* Include padding/border in width */
+    min-width: 0; /* Important for flex item to shrink */
+}
+
+.comment-textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(25, 146, 212, 0.2);
+}
+
+.post-comment-btn {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.post-comment-btn i {
+    font-size: 1.8rem;
+    color: var(--white);
+}
+
+.post-comment-btn:hover {
+    background-color: #1565C0;
+    transform: scale(1.05);
+}
+
+.post-comment-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0; /* Allow flex item to shrink */
+}
+
+.comment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    background-color: #f9f9f9; /* Light background for comments */
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    min-width: 0; /* Allow flex item to shrink */
+    box-sizing: border-box; /* Include padding/border in width */
+}
+
+.comment-item .comment-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.comment-content-wrapper {
+    flex: 1;
+    min-width: 0; /* Allow flex item to shrink */
+}
+
+.comment-meta {
+    display: flex;
+    align-items: baseline; /* Align author and timestamp */
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+    min-width: 0; /* Allow flex item to shrink */
+}
+
+.comment-author {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--black);
+}
+
+.comment-timestamp {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.comment-text {
+    font-size: 1.3rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    word-wrap: break-word; /* Ensure long words break */
+}
+
+/* Loading/No comments messages */
+.comments-loading, .no-comments-message {
+    text-align: center;
+    padding: 10px;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+}

@@ -1,0 +1,211 @@
+/* Admin-Dashboard/css/responsive.css */
+
+/* General Mobile/Tablet Adjustments (apply to screens 992px and smaller) */
+@media (max-width: 992px) {
+    /* Adjustments for the main layout containers */
+    .container {
+        flex-direction: column; /* Stack sidebar and content vertically */
+        height: auto; /* Allow height to adjust to content */
+        overflow-y: visible; /* Let children manage their own scrolling */
+    }
+
+    body {
+        overflow-y: visible; /* Allow body to scroll again on smaller screens */
+        height: auto; /* Let body height adjust */
+    }
+
+    .sidebar {
+        position: static; /* Remove fixed position, flows with document */
+        width: 100%; /* Take full width */
+        height: auto; /* Height adjusts to content */
+        padding: 1rem; /* Adjust padding */
+        overflow-y: visible; /* Let its content overflow */
+        margin-bottom: 20px; /* Space between sidebar and main content */
+    }
+
+    .header {
+        position: static; /* Remove fixed position */
+        width: 100%; /* Take full width */
+        padding: 1rem; /* Adjust padding */
+        height: auto; /* Height adjusts to content */
+        text-align: center;
+        box-shadow: none; /* Remove shadow if desired, as it's no longer fixed */
+        margin: 0; /* Remove any residual margins */
+    }
+
+    .header-item1 {
+        grid-template-columns: 1fr; /* Stack elements vertically */
+        gap: 1rem;
+    }
+
+    .search-bar h3 {
+        text-align: center;
+    }
+
+    .notification {
+        justify-self: center; /* Center notification icons */
+        margin-right: 0;
+    }
+
+    .content {
+        margin-left: 0; /* No margin-left needed when stacked */
+        margin-top: 0; /* No margin-top needed when stacked */
+        height: auto; /* Height adjusts to content */
+        overflow-y: visible; /* Let its content scroll if needed */
+        padding: 1.5rem; /* Adjust general content padding */
+    }
+
+    .content-main {
+        grid-template-columns: 1fr; /* Stack left and right columns vertically */
+        gap: 2rem;
+        padding: 0; /* Remove padding if added by parent */
+    }
+
+    .content-left {
+        padding-top: 0; /* Remove any extra top padding */
+    }
+
+    .right-side-container {
+        width: 100%; /* Take full width */
+        margin-left: auto;
+        margin-right: auto;
+        justify-items: center; /* Center calendar/routine blocks */
+    }
+
+    /* Specific widget adjustments for smaller screens */
+    .dynamic-monthly-calendar-block,
+    .class-routine {
+        width: 90%; /* Adjust width to not be full for better aesthetics */
+        max-width: 350px; /* Max width to prevent stretching too wide */
+    }
+
+    /* General forms and cards adjustments */
+    .profile-container,
+    .content-section,
+    .create-post,
+    .card {
+        padding: 15px; /* Smaller padding for smaller screens */
+    }
+
+    .profile-header {
+        flex-direction: column; /* Stack profile picture and info */
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        padding-bottom: 1.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start; /* Align header content to start */
+        gap: 10px;
+    }
+
+    .action-button,
+    .save-button,
+    .post-button,
+    .new-photo-upload-btn,
+    .post-options select {
+        width: 100%; /* Full width for buttons and selects */
+        justify-content: center;
+    }
+
+    .post-options {
+        flex-direction: column; /* Stack post options vertically */
+        align-items: stretch; /* Stretch items to fill width */
+    }
+
+    .post-options select,
+    .new-photo-upload-btn,
+    .post-button {
+        margin-left: 0; /* Remove auto-margin on post button */
+    }
+
+    .skills-list, .courses-list {
+        padding-right: 0; /* Remove custom scrollbar padding */
+    }
+}
+
+/* Even Smaller Screens (e.g., mobile phones, apply to screens 576px and smaller) */
+@media (max-width: 576px) {
+    .header {
+        padding: 0.8rem; /* Even less padding */
+    }
+    .search-bar h3 {
+        font-size: 20px; /* Smaller text for header title */
+    }
+    .notification i.nav-icon {
+        font-size: 2rem; /* Smaller icons */
+    }
+    .notification img.profile-img {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .content {
+        padding: 1rem; /* Minimum content padding */
+    }
+
+    .coin-reputation {
+        gap: 15px; /* Smaller gap */
+        margin-right: 5px;
+    }
+
+    .dynamic-monthly-calendar-block,
+    .class-routine {
+        width: 100%; /* Full width on very small screens */
+    }
+
+    .tool-block {
+        padding: 15px; /* Smaller padding for academic tools blocks */
+        min-height: 120px;
+    }
+    .tool-block h3 {
+        font-size: 1.8rem;
+    }
+    .tool-block i.mdi {
+        font-size: 3rem;
+    }
+
+    .calculator-container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+    .calculator-form input, .calculator-form select {
+        padding: 10px;
+        font-size: 1.4rem;
+    }
+    .calculator-form .action-button {
+        padding: 10px 15px;
+        font-size: 1.4rem;
+    }
+}
+
+/* Chat-specific responsive adjustments (if chat is brought back, ensure these work) */
+/* This section is retained but will only apply if chat is active on a responsive screen */
+@media (max-width: 768px) {
+    .chat-area .back-icon {
+        font-size: 16px;
+    }
+    .chat-area header img {
+        height: 40px;
+        width: 40px;
+        margin: 0 10px;
+    }
+    .chat-area header .details span {
+        font-size: 16px;
+    }
+    .chat-box {
+        min-height: 300px;
+        max-height: 300px;
+    }
+    .typing-area input {
+        font-size: 14px;
+        height: 40px;
+    }
+    .typing-area button {
+        width: 45px;
+        height: 40px;
+        font-size: 17px;
+    }
+}

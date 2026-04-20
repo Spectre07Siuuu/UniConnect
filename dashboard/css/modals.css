@@ -1,0 +1,185 @@
+/* Admin-Dashboard/css/modals.css */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--white);
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-top: 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.close-button {
+  font-size: 24px;
+  cursor: pointer;
+  padding-top: 0;
+}
+
+.modal-body {
+  overflow-y: visible;
+  padding-top: 0;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+#course-search {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  font-size: 16px; /* INCREASED SIZE */
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+/* This class is for items INSIDE the modal list for selection */
+.course-item-selectable {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px; /* INCREASED SIZE */
+}
+
+.course-item-selectable:last-child {
+    border-bottom: none;
+}
+
+.course-item-selectable:hover {
+    background-color: #f5f5f5;
+}
+
+.course-item-selectable.selected {
+    background-color: var(--primary);
+    color: var(--white);
+    font-weight: bold;
+}
+
+
+#available-courses-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#course-section-selection {
+  display: block !important;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  padding-bottom: 20px;
+  margin-bottom: 0;
+}
+
+#course-section-selection h4 {
+  margin-bottom: 15px;
+  color: var(--text-color);
+  font-size: 16px; /* Reference size for "Select Section" text */
+}
+
+.section-select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  font-size: 16px; /* INCREASED SIZE TO MATCH "SELECT SECTION" HEADING */
+  background-color: var(--white);
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.add-course-btn {
+  display: flex !important;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 16px; /* INCREASED SIZE TO MATCH "SELECT SECTION" HEADING */
+  font-weight: 500;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.add-course-btn:hover {
+  background-color: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.add-course-btn i {
+  font-size: 18px;
+  color: var(--white);
+}
+
+.add-skill-btn {
+  display: flex !important;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 16px; /* INCREASED SIZE */
+  font-weight: 500;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.add-skill-btn:hover {
+  background-color: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.add-skill-btn i {
+  font-size: 18px;
+  color: var(--white);
+}

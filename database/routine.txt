@@ -1,0 +1,314 @@
+USE uniconnect;
+
+TRUNCATE TABLE routine;
+
+INSERT INTO routine (course_id, section, day_of_week, start_time, end_time, room_number, is_exam) VALUES
+-- Intensive English I
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'A', 'saturday', '08:30:00', '09:40:00', '101', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'A', 'tuesday', '08:30:00', '09:40:00', '101', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'B', 'sunday', '08:30:00', '09:40:00', '102', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'B', 'wednesday', '08:30:00', '09:40:00', '102', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'C', 'saturday', '08:30:00', '09:40:00', '103', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'C', 'tuesday', '08:30:00', '09:40:00', '103', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'D', 'sunday', '08:30:00', '09:40:00', '104', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English I'), 'D', 'wednesday', '08:30:00', '09:40:00', '104', FALSE),
+
+-- Intensive English II
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'A', 'saturday', '09:50:00', '11:00:00', '105', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'A', 'tuesday', '09:50:00', '11:00:00', '105', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'B', 'sunday', '09:50:00', '11:00:00', '106', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'B', 'wednesday', '09:50:00', '11:00:00', '106', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'C', 'saturday', '09:50:00', '11:00:00', '107', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'C', 'tuesday', '09:50:00', '11:00:00', '107', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'D', 'sunday', '09:50:00', '11:00:00', '108', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Intensive English II'), 'D', 'wednesday', '09:50:00', '11:00:00', '108', FALSE),
+
+-- Society, Environment and Engineering Ethics
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'A', 'saturday', '11:10:00', '12:20:00', '109', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'A', 'tuesday', '11:10:00', '12:20:00', '109', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'B', 'sunday', '11:10:00', '12:20:00', '110', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'B', 'wednesday', '11:10:00', '12:20:00', '110', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'C', 'saturday', '11:10:00', '12:20:00', '111', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'C', 'tuesday', '11:10:00', '12:20:00', '111', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'D', 'sunday', '11:10:00', '12:20:00', '112', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Society, Environment and Engineering Ethics'), 'D', 'wednesday', '11:10:00', '12:20:00', '112', FALSE),
+
+-- Project Management
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'A', 'saturday', '08:30:00', '09:40:00', '113', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'A', 'tuesday', '08:30:00', '09:40:00', '113', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'B', 'sunday', '08:30:00', '09:40:00', '114', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'B', 'wednesday', '08:30:00', '09:40:00', '114', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'C', 'saturday', '08:30:00', '09:40:00', '115', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'C', 'tuesday', '08:30:00', '09:40:00', '115', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'D', 'sunday', '08:30:00', '09:40:00', '116', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Project Management'), 'D', 'wednesday', '08:30:00', '09:40:00', '116', FALSE),
+
+-- Physics
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'A', 'saturday', '11:10:00', '12:20:00', '221', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'A', 'tuesday', '11:10:00', '12:20:00', '221', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'B', 'sunday', '11:10:00', '12:20:00', '222', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'B', 'wednesday', '11:10:00', '12:20:00', '222', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'C', 'saturday', '11:10:00', '12:20:00', '223', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'C', 'tuesday', '11:10:00', '12:20:00', '223', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'D', 'sunday', '11:10:00', '12:20:00', '224', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics'), 'D', 'wednesday', '11:10:00', '12:20:00', '224', FALSE),
+
+-- Physics Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Physics Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '225', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '226', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '227', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Physics Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '228', FALSE),
+
+-- Biology for Engineers
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'A', 'saturday', '08:30:00', '09:40:00', '229', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'A', 'tuesday', '08:30:00', '09:40:00', '229', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'B', 'sunday', '08:30:00', '09:40:00', '230', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'B', 'wednesday', '08:30:00', '09:40:00', '230', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'C', 'saturday', '08:30:00', '09:40:00', '231', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'C', 'tuesday', '08:30:00', '09:40:00', '231', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'D', 'sunday', '08:30:00', '09:40:00', '232', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Biology for Engineers'), 'D', 'wednesday', '08:30:00', '09:40:00', '232', FALSE),
+
+-- Fundamental Calculus
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'A', 'saturday', '09:50:00', '11:00:00', '301', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'A', 'tuesday', '09:50:00', '11:00:00', '301', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'B', 'sunday', '09:50:00', '11:00:00', '302', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'B', 'wednesday', '09:50:00', '11:00:00', '302', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'C', 'saturday', '09:50:00', '11:00:00', '303', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'C', 'tuesday', '09:50:00', '11:00:00', '303', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'D', 'sunday', '09:50:00', '11:00:00', '304', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Fundamental Calculus'), 'D', 'wednesday', '09:50:00', '11:00:00', '304', FALSE),
+
+-- Calculus and Linear Algebra
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'A', 'saturday', '11:10:00', '12:20:00', '305', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'A', 'tuesday', '11:10:00', '12:20:00', '305', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'B', 'sunday', '11:10:00', '12:20:00', '306', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'B', 'wednesday', '11:10:00', '12:20:00', '306', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'C', 'saturday', '11:10:00', '12:20:00', '307', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'C', 'tuesday', '11:10:00', '12:20:00', '307', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'D', 'sunday', '11:10:00', '12:20:00', '308', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Calculus and Linear Algebra'), 'D', 'wednesday', '11:10:00', '12:20:00', '308', FALSE),
+
+-- Coordinate Geometry and Vector Analysis
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'A', 'saturday', '08:30:00', '09:40:00', '309', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'A', 'tuesday', '08:30:00', '09:40:00', '309', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'B', 'sunday', '08:30:00', '09:40:00', '310', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'B', 'wednesday', '08:30:00', '09:40:00', '310', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'C', 'saturday', '08:30:00', '09:40:00', '311', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'C', 'tuesday', '08:30:00', '09:40:00', '311', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'D', 'sunday', '08:30:00', '09:40:00', '312', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Coordinate Geometry and Vector Analysis'), 'D', 'wednesday', '08:30:00', '09:40:00', '312', FALSE),
+
+-- Probability and Statistics
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'A', 'saturday', '09:50:00', '11:00:00', '313', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'A', 'tuesday', '09:50:00', '11:00:00', '313', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'B', 'sunday', '09:50:00', '11:00:00', '314', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'B', 'wednesday', '09:50:00', '11:00:00', '314', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'C', 'saturday', '09:50:00', '11:00:00', '315', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'C', 'tuesday', '09:50:00', '11:00:00', '315', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'D', 'sunday', '09:50:00', '11:00:00', '316', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Probability and Statistics'), 'D', 'wednesday', '09:50:00', '11:00:00', '316', FALSE),
+
+-- Electrical Circuits
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'A', 'saturday', '11:10:00', '12:20:00', '317', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'A', 'tuesday', '11:10:00', '12:20:00', '317', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'B', 'sunday', '11:10:00', '12:20:00', '318', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'B', 'wednesday', '11:10:00', '12:20:00', '318', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'C', 'saturday', '11:10:00', '12:20:00', '319', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'C', 'tuesday', '11:10:00', '12:20:00', '319', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'D', 'sunday', '11:10:00', '12:20:00', '320', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electrical Circuits'), 'D', 'wednesday', '11:10:00', '12:20:00', '320', FALSE),
+
+-- Electronics
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'A', 'saturday', '08:30:00', '09:40:00', '321', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'A', 'tuesday', '08:30:00', '09:40:00', '321', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'B', 'sunday', '08:30:00', '09:40:00', '322', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'B', 'wednesday', '08:30:00', '09:40:00', '322', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'C', 'saturday', '08:30:00', '09:40:00', '323', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'C', 'tuesday', '08:30:00', '09:40:00', '323', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'D', 'sunday', '08:30:00', '09:40:00', '324', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics'), 'D', 'wednesday', '08:30:00', '09:40:00', '324', FALSE),
+
+-- Electronics Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Electronics Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '325', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '326', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '327', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Electronics Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '328', FALSE),
+
+-- Green Computing
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'A', 'saturday', '09:50:00', '11:00:00', '329', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'A', 'tuesday', '09:50:00', '11:00:00', '329', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'B', 'sunday', '09:50:00', '11:00:00', '330', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'B', 'wednesday', '09:50:00', '11:00:00', '330', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'C', 'saturday', '09:50:00', '11:00:00', '331', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'C', 'tuesday', '09:50:00', '11:00:00', '331', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'D', 'sunday', '09:50:00', '11:00:00', '332', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Green Computing'), 'D', 'wednesday', '09:50:00', '11:00:00', '332', FALSE),
+
+-- Introduction to Computer Systems
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'A', 'saturday', '11:10:00', '12:20:00', '401', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'A', 'tuesday', '11:10:00', '12:20:00', '401', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'B', 'sunday', '11:10:00', '12:20:00', '402', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'B', 'wednesday', '11:10:00', '12:20:00', '402', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'C', 'saturday', '11:10:00', '12:20:00', '403', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'C', 'tuesday', '11:10:00', '12:20:00', '403', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'D', 'sunday', '11:10:00', '12:20:00', '404', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Introduction to Computer Systems'), 'D', 'wednesday', '11:10:00', '12:20:00', '404', FALSE),
+
+-- Structured Programming Language
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'A', 'saturday', '08:30:00', '09:40:00', '405', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'A', 'tuesday', '08:30:00', '09:40:00', '405', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'B', 'sunday', '08:30:00', '09:40:00', '406', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'B', 'wednesday', '08:30:00', '09:40:00', '406', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'C', 'saturday', '08:30:00', '09:40:00', '407', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'C', 'tuesday', '08:30:00', '09:40:00', '407', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'D', 'sunday', '08:30:00', '09:40:00', '408', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language'), 'D', 'wednesday', '08:30:00', '09:40:00', '408', FALSE),
+
+-- Structured Programming Language Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '409', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '410', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '411', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Structured Programming Language Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '412', FALSE),
+
+-- Object Oriented Programming
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'A', 'saturday', '09:50:00', '11:00:00', '413', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'A', 'tuesday', '09:50:00', '11:00:00', '413', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'B', 'sunday', '09:50:00', '11:00:00', '414', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'B', 'wednesday', '09:50:00', '11:00:00', '414', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'C', 'saturday', '09:50:00', '11:00:00', '415', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'C', 'tuesday', '09:50:00', '11:00:00', '415', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'D', 'sunday', '09:50:00', '11:00:00', '416', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming'), 'D', 'wednesday', '09:50:00', '11:00:00', '416', FALSE),
+
+-- Object Oriented Programming Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '417', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '418', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '419', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Object Oriented Programming Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '420', FALSE),
+
+-- Advanced Object Oriented Programming Lab
+((SELECT course_id FROM course WHERE course_name = 'Advanced Object Oriented Programming Lab'), 'A', 'saturday', '08:30:00', '11:00:00', '421', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Advanced Object Oriented Programming Lab'), 'B', 'sunday', '08:30:00', '11:00:00', '422', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Advanced Object Oriented Programming Lab'), 'C', 'tuesday', '08:30:00', '11:00:00', '423', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Advanced Object Oriented Programming Lab'), 'D', 'wednesday', '08:30:00', '11:00:00', '424', FALSE),
+
+-- Web Programming
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'A', 'saturday', '11:10:00', '12:20:00', '425', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'A', 'tuesday', '11:10:00', '12:20:00', '425', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'B', 'sunday', '11:10:00', '12:20:00', '426', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'B', 'wednesday', '11:10:00', '12:20:00', '426', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'C', 'saturday', '11:10:00', '12:20:00', '427', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'C', 'tuesday', '11:10:00', '12:20:00', '427', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'D', 'sunday', '11:10:00', '12:20:00', '428', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Web Programming'), 'D', 'wednesday', '11:10:00', '12:20:00', '428', FALSE),
+
+-- Mobile Application Development
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'A', 'saturday', '08:30:00', '09:40:00', '429', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'A', 'tuesday', '08:30:00', '09:40:00', '429', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'B', 'sunday', '08:30:00', '09:40:00', '430', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'B', 'wednesday', '08:30:00', '09:40:00', '430', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'C', 'saturday', '08:30:00', '09:40:00', '431', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'C', 'tuesday', '08:30:00', '09:40:00', '431', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'D', 'sunday', '08:30:00', '09:40:00', '432', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Mobile Application Development'), 'D', 'wednesday', '08:30:00', '09:40:00', '432', FALSE),
+
+-- Digital Logic Design
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'A', 'saturday', '09:50:00', '11:00:00', '433', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'A', 'tuesday', '09:50:00', '11:00:00', '433', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'B', 'sunday', '09:50:00', '11:00:00', '434', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'B', 'wednesday', '09:50:00', '11:00:00', '434', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'C', 'saturday', '09:50:00', '11:00:00', '435', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'C', 'tuesday', '09:50:00', '11:00:00', '435', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'D', 'sunday', '09:50:00', '11:00:00', '436', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design'), 'D', 'wednesday', '09:50:00', '11:00:00', '436', FALSE),
+
+-- Digital Logic Design Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '437', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '438', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '439', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Digital Logic Design Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '440', FALSE),
+
+-- Computer Architecture
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'A', 'saturday', '11:10:00', '12:20:00', '441', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'A', 'tuesday', '11:10:00', '12:20:00', '441', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'B', 'sunday', '11:10:00', '12:20:00', '442', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'B', 'wednesday', '11:10:00', '12:20:00', '442', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'C', 'saturday', '11:10:00', '12:20:00', '443', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'C', 'tuesday', '11:10:00', '12:20:00', '443', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'D', 'sunday', '11:10:00', '12:20:00', '444', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Computer Architecture'), 'D', 'wednesday', '11:10:00', '12:20:00', '444', FALSE),
+
+-- Microprocessors and Microcontrollers
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'A', 'saturday', '08:30:00', '09:40:00', '445', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'A', 'tuesday', '08:30:00', '09:40:00', '445', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'B', 'sunday', '08:30:00', '09:40:00', '446', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'B', 'wednesday', '08:30:00', '09:40:00', '446', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'C', 'saturday', '08:30:00', '09:40:00', '447', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'C', 'tuesday', '08:30:00', '09:40:00', '447', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'D', 'sunday', '08:30:00', '09:40:00', '448', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers'), 'D', 'wednesday', '08:30:00', '09:40:00', '448', FALSE),
+
+-- Microprocessors and Microcontrollers Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '449', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '450', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '451', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Microprocessors and Microcontrollers Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '452', FALSE),
+
+-- Discrete Mathematics
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'A', 'saturday', '09:50:00', '11:00:00', '453', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'A', 'tuesday', '09:50:00', '11:00:00', '453', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'B', 'sunday', '09:50:00', '11:00:00', '454', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'B', 'wednesday', '09:50:00', '11:00:00', '454', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'C', 'saturday', '09:50:00', '11:00:00', '455', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'C', 'tuesday', '09:50:00', '11:00:00', '455', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'D', 'sunday', '09:50:00', '11:00:00', '456', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Discrete Mathematics'), 'D', 'wednesday', '09:50:00', '11:00:00', '456', FALSE),
+
+-- Data Structure and Algorithms I
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'A', 'saturday', '11:10:00', '12:20:00', '457', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'A', 'tuesday', '11:10:00', '12:20:00', '457', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'B', 'sunday', '11:10:00', '12:20:00', '458', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'B', 'wednesday', '11:10:00', '12:20:00', '458', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'C', 'saturday', '11:10:00', '12:20:00', '459', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'C', 'tuesday', '11:10:00', '12:20:00', '459', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'D', 'sunday', '11:10:00', '12:20:00', '460', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I'), 'D', 'wednesday', '11:10:00', '12:20:00', '460', FALSE),
+
+-- Data Structure and Algorithms I Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I Laboratory'), 'A', 'saturday', '08:30:00', '11:00:00', '461', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I Laboratory'), 'B', 'sunday', '08:30:00', '11:00:00', '462', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I Laboratory'), 'C', 'tuesday', '08:30:00', '11:00:00', '463', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Data Structure and Algorithms I Laboratory'), 'D', 'wednesday', '08:30:00', '11:00:00', '464', FALSE),
+
+-- Artificial Intelligence
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'A', 'saturday', '09:00:00', '10:30:00', '501', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'A', 'tuesday', '09:00:00', '10:30:00', '501', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'B', 'sunday', '09:00:00', '10:30:00', '502', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'B', 'wednesday', '09:00:00', '10:30:00', '502', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'C', 'saturday', '10:30:00', '12:00:00', '503', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'C', 'tuesday', '10:30:00', '12:00:00', '503', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'D', 'sunday', '10:30:00', '12:00:00', '504', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence'), 'D', 'wednesday', '10:30:00', '12:00:00', '504', FALSE),
+
+-- Artificial Intelligence Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence Laboratory'), 'A', 'monday', '01:00:00', '03:30:00', '505', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence Laboratory'), 'B', 'tuesday', '01:00:00', '03:30:00', '506', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence Laboratory'), 'C', 'saturday', '01:00:00', '03:30:00', '505', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Artificial Intelligence Laboratory'), 'D', 'wednesday', '01:00:00', '03:30:00', '506', FALSE),
+
+-- Database Management Systems
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'A', 'saturday', '09:00:00', '10:30:00', '507', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'B', 'saturday', '10:30:00', '12:00:00', '508', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'C', 'sunday', '09:00:00', '10:30:00', '509', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'D', 'sunday', '10:30:00', '12:00:00', '510', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'A', 'tuesday', '09:00:00', '10:30:00', '507', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'B', 'tuesday', '10:30:00', '12:00:00', '508', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'C', 'wednesday', '09:00:00', '10:30:00', '509', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems'), 'D', 'wednesday', '10:30:00', '12:00:00', '510', FALSE),
+
+-- Database Management Systems Laboratory
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems Laboratory'), 'A', 'tuesday', '01:00:00', '03:30:00', '511', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems Laboratory'), 'B', 'saturday', '01:00:00', '03:30:00', '512', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems Laboratory'), 'A', 'monday', '01:00:00', '03:30:00', '511', FALSE),
+((SELECT course_id FROM course WHERE course_name = 'Database Management Systems Laboratory'), 'B', 'wednesday', '01:00:00', '03:30:00', '512', FALSE);

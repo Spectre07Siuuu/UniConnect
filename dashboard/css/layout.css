@@ -1,0 +1,104 @@
+/* Admin-Dashboard/css/layout.css */
+
+.container {
+  height: 100vh;
+  display: flex; /* Changed to flex to arrange sidebar and content horizontally */
+  box-sizing: border-box; /* Ensure padding/border don't add to total width/height */
+}
+
+.header {
+ background-color: var(--white);
+  padding: 1rem 4rem;
+  display: grid;
+  gap: 1rem;
+  position: relative; /* Changed from fixed */
+  width: 100%; /* Take full width of its parent (.content) */
+  box-shadow: 0 2px 8px var(--shadow-color);
+  z-index: 50;
+  height: var(--header-height);
+  min-height: var(--header-height); /* Ensure it always has its height */
+  align-items: center;
+  flex-shrink: 0; /* Prevent header from shrinking */
+  border-radius: 10px;
+}
+
+.sidebar {
+  background-color: var(--black);
+  padding: 1rem;
+  position: relative; /* Changed from fixed */
+  width: 280px;
+  min-width: 280px; /* Ensure sidebar always takes this width */
+  height: 100vh;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  z-index: 100;
+  overflow-y: hidden; /* Hide overflow for its menu items if too many */
+  box-sizing: border-box;
+}
+
+.content {
+  background-color: var(--content-bg);
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px),
+                    linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  /* Removed padding here, manage it on content-main or children */
+  gap: 2rem;
+  margin: 0;
+  flex-grow: 1; /* Allow content to take all remaining horizontal space */
+  display: flex; /* Changed to flex column to stack header and main-content vertically */
+  flex-direction: column;
+  height: 100vh; /* Take full height of its parent (.container) */
+  overflow-y: auto; /* <--- MAIN VERTICAL SCROLL FOR THE ENTIRE RIGHT SIDE CONTENT */
+  box-sizing: border-box;
+}
+
+.content-main {
+  display: grid;
+  /* Use auto for first column for index.php's content-left, then 350px for right-side-container */
+  /* This ensures the grid always reserves space for two columns */
+  grid-template-columns: minmax(0, auto) 350px; /* Changed 1fr to auto to allow min-content sizing for left column IF needed, but will still take available space due to flex-grow on children */
+  gap: 2rem;
+  padding: 2rem 1.5rem; /* Add padding here for inner content */
+  flex-grow: 1; /* Allows content-main to fill remaining vertical space below header */
+  box-sizing: border-box;
+  min-width: 0; /* Important for grid items to shrink */
+  overflow-x: hidden; /* Hide horizontal overflow for the grid itself */
+  overflow-y: visible; /* <--- IMPORTANT: Allow vertical content to be visible, letting .content scroll */
+}
+
+.content-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: auto; /* Let height be determined by content, allow it to push .content-main's height if needed */
+  /* Remove overflow-y: auto here, as the main .content will handle scrolling */
+  overflow-y: visible; /* <--- IMPORTANT: Do NOT put scroll here, let .content manage */
+  padding-top: 0;
+  min-width: 0; /* Allow flex item to shrink */
+  overflow-x: hidden; /* Prevent horizontal overflow here */
+  /* Make content-left explicitly span only the first column */
+  grid-column: 1 / 2;
+}
+
+.right-side-container {
+  display: grid;
+  grid-template-rows: auto auto; /* Calendar and Routine will stack */
+  gap: 1.5rem; /* Adjusted spacing */
+  height: auto; /* Let height be determined by content */
+  /* Remove overflow-y: auto here, as the main .content will handle scrolling */
+  overflow-y: visible; /* <--- IMPORTANT: Do NOT put scroll here, let .content manage */
+  min-width: 0; /* Allow grid item to shrink */
+  overflow-x: hidden; /* Prevent horizontal overflow here */
+  /* Make right-side-container explicitly span only the second column */
+  grid-column: 2 / 3;
+}
+
+/* NEW RULE FOR SINGLE COLUMN LAYOUTS (e.g., Notes page) */
+.content-main.single-column-layout {
+  grid-template-columns: 1fr; /* Force a single column, which will take full width */
+  /* No need to set overflow-y here again, .content handles main scroll */
+}
+
+/* When in single-column layout, content-left should span the full grid */
+.content-main.single-column-layout .content-left {
+  grid-column: 1 / -1; /* Make it span from the first column line to the last */
+}

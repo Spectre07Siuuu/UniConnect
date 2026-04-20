@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.idea/
+.vscode/
+
+*.log
+*.tmp
+*.bak
+*.swp
+
+vendor/
+node_modules/
+
+database/database_schema.pdf

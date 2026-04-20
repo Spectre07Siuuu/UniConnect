@@ -1,0 +1,259 @@
+/* Admin-Dashboard/css/calculators.css */
+
+/* General calculator container (used by both CGPA and Installment) */
+.calculator-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allow content to shrink if needed */
+}
+
+.calculator-container h2 {
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calculator-container h3 { /* Used by subject headers in CGPA, total in Installment */
+  color: var(--primary);
+  font-size: 1.8rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.calculator-form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.calculator-form input[type="text"],
+.calculator-form input[type="number"],
+.calculator-form select {
+  width: calc(100% - 20px); /* Adjusting for padding */
+  padding: 12px 15px;
+  margin-top: 5px;
+  font-size: 1.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  background: #f9f9f9;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allow input to shrink */
+}
+
+.calculator-form input[type="text"]:focus,
+.calculator-form input[type="number"]:focus,
+.calculator-form select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25, 146, 212, 0.2);
+}
+
+.calculator-form .action-button {
+  display: inline-flex;
+  width: auto;
+  min-width: 120px;
+  margin-right: 15px;
+  margin-top: 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 25px;
+  font-size: 1.6rem;
+}
+
+.calculator-form .action-button:last-child {
+  margin-right: 0;
+}
+
+/* Specific button colors for CGPA Calculator */
+.calculator-form .add-subject-btn {
+  background: #1992d4;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+.calculator-form .add-subject-btn:hover {
+  background: #03a2f7;
+}
+.calculator-form .delete-subject-btn {
+  background: #feefae;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+.calculator-form .delete-subject-btn:hover {
+  background: #fce172;
+}
+.calculator-form .calculate-btn {
+  background: #b5efff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+.calculator-form .calculate-btn:hover {
+  background:  #26b9e1;
+}
+
+/* Result Display */
+.result-display { /* Used by CGPA Calculator result */
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #EBF8FF;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.result-display strong {
+    color: var(--text-color);
+    font-weight: normal;
+}
+.result-display strong:last-child {
+    display: block;
+    margin-top: 10px;
+}
+.result-display strong span {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* CGPA Subject Entry Specifics */
+.subject-entry {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #F5FAFF;
+  border-left: 5px solid var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: 0; /* Allow content to shrink if needed */
+}
+.subject-entry hr {
+    border: none;
+    border-top: 1px dashed var(--border-color);
+    margin: 20px 0;
+}
+
+
+/* Installment Calculator Specifics (also uses .calculator-container) */
+.installment-container { /* Redefined to ensure correct overrides/defaults if any */
+  max-width: 600px; /* Specific width for installment, narrower than CGPA */
+  /* Other properties inherited from .calculator-container */
+}
+
+.installment-container h3 { /* Specific for total payment h3, overrides default h3 */
+    font-size: 2.5rem; /* Increased for Total Payment */
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.waver-select {
+  height: 45px;
+}
+
+.btns { /* Reused for Installment calculator buttons */
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.btns button { /* Reused basic button styling */
+  padding: 12px 25px;
+  font-size: 1.6rem;
+  border: none;
+  flex: 1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btns button[name="calculate"] { /* Specific for Installment Calculate button */
+  background-color: #1992d4;
+  color: var(--white);
+}
+
+.btns button[name="calculate"]:hover {
+  background-color: #03a2f7;
+}
+
+.btns button[type="button"] { /* Specific for Installment Reset button */
+  background-color: #6c757d;
+  color: var(--white);
+}
+
+.btns button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+.installment-result { /* Styling for the result table and notes */
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.installment-result h3 { /* Total payment heading inside result */
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.installment-result p { /* Note paragraph inside result */
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.installment-result table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1.6rem;
+}
+
+.installment-result table,
+.installment-result th,
+.installment-result td {
+  border: 1px solid var(--border-color);
+}
+
+.installment-result th,
+.installment-result td {
+  padding: 15px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.installment-result th {
+  background-color: #e9ecef;
+  font-weight: 600;
+}
+
+.installment-result p:last-of-type {
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-top: 20px;
+    line-height: 1.5;
+}

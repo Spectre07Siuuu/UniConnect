@@ -1,0 +1,475 @@
+/* Admin-Dashboard/css/notes.css */
+
+/* Overall layout for the notes page content */
+.notes-page-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 0;
+    overflow-y: visible;
+    overflow-x: hidden;
+}
+
+@media (max-width: 992px) {
+    .notes-page-grid {
+        /* No change needed here, flex-direction column already handles stacking */
+    }
+}
+
+/* Search/Filter Notes Section */
+.filter-notes-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1rem; /* Reduced padding */
+    border-left: 5px solid var(--primary);
+    width: 100%;
+    order: 1;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.filter-notes-card h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 1rem; /* Reduced margin */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem; /* Reduced padding */
+}
+
+/* Make filter form elements align in one row */
+.filter-notes-card form {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens if necessary */
+    align-items: flex-end; /* Align items to the bottom, useful for labels and buttons */
+    gap: 10px; /* Space between form elements */
+    margin-top: 5px; /* Adjust top margin for the form itself */
+}
+
+.filter-notes-card form .form-group {
+    flex: 1; /* Allow form groups to grow and shrink */
+    min-width: 120px; /* Minimum width for each dropdown/button */
+    margin-bottom: 0; /* Remove default form-group margin */
+}
+
+.filter-notes-card form .form-group label {
+    font-size: 1.3rem; /* Slightly smaller label */
+    margin-bottom: 3px; /* Reduced space below label */
+}
+
+.filter-notes-card form select {
+    padding: 8px; /* Compact dropdowns */
+    font-size: 1.3rem; /* Smaller font in dropdown */
+    height: 38px; /* Fixed height for alignment */
+}
+
+.filter-notes-card form .action-button {
+    padding: 8px 15px; /* Compact button */
+    font-size: 1.4rem; /* Smaller font for button */
+    margin-top: 0; /* Remove default button margin */
+    height: 38px; /* Match height of selects */
+    align-self: flex-end; /* Align button to the bottom of the row */
+}
+
+/* Create Note Section */
+.create-note-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1rem; /* Reduced padding */
+    border-left: 5px solid var(--primary);
+    width: 100%;
+    order: 2;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.create-note-card h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 1rem; /* Reduced margin */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem; /* Reduced padding */
+}
+
+/* Make upload form compact */
+.create-note-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between rows */
+}
+
+.create-note-card form .form-group {
+    margin-bottom: 0; /* Remove default margin */
+}
+
+.create-note-card form .form-group label {
+    font-size: 1.3rem;
+    margin-bottom: 3px;
+}
+
+.create-note-card form select,
+.create-note-card form textarea {
+    padding: 8px; /* Compact inputs/textareas/selects */
+    font-size: 1.3rem; /* Smaller font size */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #fff;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.create-note-card form select {
+    height: 38px; /* Fixed height for alignment */
+}
+
+.create-note-card form textarea {
+    height: 70px; /* Fixed height for textarea */
+    min-height: 70px;
+    max-height: 70px;
+    resize: none; /* Prevent resizing */
+    width: 100%;
+}
+
+/* Row 1: Subject and Exam Type */
+.form-row.two-cols {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.form-row.two-cols .form-group {
+    flex: 1;
+    min-width: 150px; /* Ensure dropdowns don't get too narrow */
+}
+
+/* Row 2: Description */
+.create-note-card form .form-group:nth-child(2) {
+    width: 100%; /* Full width for description */
+}
+
+/* Row 3: File Upload and Submit Button */
+.form-row.file-upload-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.create-note-card form .custom-file-upload {
+    padding: 8px 12px; /* Compact file upload button */
+    font-size: 1.3rem;
+    height: 38px; /* Fixed height for alignment */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.create-note-card form .file-name-display {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    flex: 1; /* Take remaining space */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.create-note-card form .upload-note-btn {
+    padding: 8px 20px; /* Compact upload button */
+    font-size: 1.4rem;
+    height: 38px; /* Fixed height for alignment */
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Bottom Section: Notes Feed */
+.notes-feed-section {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    border-left: 5px solid var(--black);
+    width: 100%;
+    order: 3;
+    height: auto;
+    overflow-y: visible; /* Let main .content handle scroll */
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.notes-feed-section h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.8rem;
+}
+
+/* Notes Feed styling */
+.notes-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Reduced gap between note posts */
+}
+
+/* Note Card Styling */
+.note-post-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.note-post-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.user-avatar img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.post-meta {
+    flex-grow: 1;
+}
+
+.meta-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.user-name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.timestamp {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.meta-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.subject-tag, .note-type-tag {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 20px;
+    padding: 0.3rem 0.6rem;
+    font-size: 1rem;
+}
+
+/* Content Styling */
+.note-content {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-title {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.note-description {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+    max-width: 70%; /* Shorten description width */
+}
+
+.note-file-info {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #444;
+}
+
+.note-file-info .mdi {
+    margin-right: 8px;
+}
+
+.file-name {
+    margin-right: 8px;
+}
+
+.download-count {
+    color: #888;
+}
+
+/* Actions Styling */
+.note-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 8px;
+    margin-top: 8px; /* Add some space above buttons */
+}
+
+.action-btn {
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--primary-dark, #0056b3);
+    transform: translateY(-1px);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn i {
+    margin-right: 4px;
+}
+
+/* No Notes Message */
+.no-notes-message {
+    text-align: center;
+    color: #888;
+    padding: 16px;
+}
+
+/* Responsive Design for Note Cards */
+@media (max-width: 768px) {
+    .note-actions {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .action-btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .note-description {
+        max-width: 100%; /* Full width on mobile */
+    }
+}
+
+/* Minimal Form Input Styles */
+input[type="text"],
+select,
+textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #fff;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+}
+
+/* Custom Select Box Minimal Look */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 36px; /* Extra space for icon */
+    cursor: pointer;
+}
+
+/* Buttons: Minimal Modern Look */
+.action-button {
+    background-color: var(--primary);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: var(--primary-dark, #0056b3);
+    transform: translateY(-1px);
+}
+
+.action-button:active {
+    transform: translateY(0);
+}
+
+/* File Upload Customization */
+.custom-file-upload {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #45a049;
+}
+
+/* Smooth Transitions Globally */
+button,
+input,
+select,
+textarea {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Optional: Give the page a better scrollbar */
+.notes-page-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notes-page-grid::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.notes-page-grid::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}

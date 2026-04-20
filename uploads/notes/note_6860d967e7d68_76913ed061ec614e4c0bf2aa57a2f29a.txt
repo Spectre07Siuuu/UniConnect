@@ -1,0 +1,252 @@
+-- uniconnect.sql (Unified Schema)
+
+DROP DATABASE IF EXISTS uniconnect;
+
+-- Create Database
+CREATE DATABASE IF NOT EXISTS uniconnect;
+USE uniconnect;
+
+-- 1. users table (COMBINED from your original, chat, and friend's profile features)
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Renamed from user_id to id for consistency with friend's code
+    full_name VARCHAR(100) NOT NULL,
+    student_id VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    coin_balance INT DEFAULT 5, -- Friend's default is 5
+    reputation_points INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Friend's profile fields
+    trimester VARCHAR(20) DEFAULT NULL,
+    profile_picture VARCHAR(255) DEFAULT 'images/uniconnect.png', -- Default path for profile images
+    bio TEXT DEFAULT NULL,
+    profile_completion TINYINT DEFAULT 0,
+    reward_claimed BOOLEAN DEFAULT FALSE, -- For 100% profile completion reward
+
+    -- Chat system specific fields (from previous merge)
+    unique_id INT UNIQUE, -- Will be generated and populated on login if null
+    fname VARCHAR(255),    -- Populated from full_name
+    lname VARCHAR(255),    -- Populated from full_name
+    img VARCHAR(255) DEFAULT 'default.jpg', -- Default image for chat
+    status VARCHAR(255) DEFAULT 'Offline now' -- For chat online/offline status
+);
+
+-- 2. skills table (from friend's profile)
+CREATE TABLE IF NOT EXISTS skills (
+    skill_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    skill_name VARCHAR(200) NOT NULL,
+    -- Removed skill_point and is_verified, verification_document_url from your original skills table based on friend's usage
+    CONSTRAINT fk_user_id_skills FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    UNIQUE (user_id, skill_name) -- Prevent duplicate skills for one user
+);
+
+-- 3. user_skill (Original table, but now skills are managed directly in `skills` table from friend's code.
+-- I'm going to assume friend's `skills` table replaces your `user_skill` table,
+-- as his `profile.php` directly adds/removes to a `skills` table with `user_id`, `skill_name`.
+-- If you need `is_verified` or `skill_point`, we'd need to re-add those to the new `skills` table schema.
+-- For now, following friend's direct implementation.
+-- Your original `user_skill` related entries will be removed in favor of this simple `skills` table.
+
+-- 4. help_request table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS help_request (
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    title VARCHAR(255),
+    description TEXT,
+    image_url VARCHAR(255),
+    reward_offered INT,
+    is_quick_help BOOLEAN DEFAULT FALSE,
+    user_status VARCHAR(50),
+    CONSTRAINT fk_user_id_help_request FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- 5. help_offer table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS help_offer (
+    offer_id INT AUTO_INCREMENT PRIMARY KEY,
+    request_id INT,
+    helper_id INT,
+    message TEXT,
+    is_accepted BOOLEAN DEFAULT FALSE,
+    help_time DATETIME,
+    CONSTRAINT fk_helper_id_help_offer FOREIGN KEY (helper_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_request_id_help_offer FOREIGN KEY (request_id) REFERENCES help_request (request_id) ON DELETE CASCADE
+);
+
+-- 6. help_feedback table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS help_feedback (
+    feedback_id INT AUTO_INCREMENT PRIMARY KEY,
+    offer_id INT,
+    giver_id INT,
+    receiver_id INT,
+    was_helped BOOLEAN,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    review_text TEXT,
+    CONSTRAINT fk_offer_id_help_feedback FOREIGN KEY (offer_id) REFERENCES help_offer (offer_id) ON DELETE CASCADE,
+    CONSTRAINT fk_giver_id_help_feedback FOREIGN KEY (giver_id) REFERENCES users (id),
+    CONSTRAINT fk_receiver_id_help_feedback FOREIGN KEY (receiver_id) REFERENCES users (id)
+);
+
+-- 7. lost_found_post table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS lost_found_post (
+    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    post_type ENUM('lost', 'found') NOT NULL,
+    title VARCHAR(255),
+    description TEXT,
+    image_url VARCHAR(255),
+    user_status VARCHAR(50),
+    price INT,
+    CONSTRAINT fk_user_id_lost_found_post FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- 8. comments table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS comments (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    comment_text TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_post_id_comments FOREIGN KEY (post_id) REFERENCES lost_found_post (post_id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_id_comments FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- 9. study_group table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS study_group (
+    group_id INT AUTO_INCREMENT PRIMARY KEY,
+    creator_id INT,
+    group_name VARCHAR(100),
+    description TEXT,
+    meeting_time DATETIME,
+    is_open BOOLEAN DEFAULT TRUE,
+    max_members INT,
+    CONSTRAINT fk_creator_id_study_group FOREIGN KEY (creator_id) REFERENCES users (id)
+);
+
+-- 10. study_group_member table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS study_group_member (
+    group_id INT,
+    user_id INT,
+    join_date DATE,
+    is_creator BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (group_id, user_id),
+    CONSTRAINT fk_group_id_study_group_member FOREIGN KEY (group_id) REFERENCES study_group (group_id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_id_study_group_member FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- 11. achievement table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS achievement (
+    achievement_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200),
+    description TEXT,
+    badge_image_url VARCHAR(255)
+);
+
+-- 12. user_achievement table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS user_achievement (
+    user_id INT,
+    achievement_id INT,
+    date_earned DATE,
+    PRIMARY KEY (user_id, achievement_id),
+    CONSTRAINT fk_user_id_user_achievement FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_achievement_id_user_achievement FOREIGN KEY (achievement_id) REFERENCES achievement (achievement_id) ON DELETE CASCADE
+);
+
+-- 13. course table (from friend's profile - NOTE: Conflicts with your original `course` and `user_course` structure)
+-- Friend's `profile.php` uses a `courses` table with `user_id`, `course_name`, `section`.
+-- Your original had `course` table for general course info and `user_course` for user-specific.
+-- To merge, we will rename friend's `courses` table to `user_courses_profile` to avoid conflict
+-- and introduce `available_courses` for the master list.
+-- This keeps your original `course` and `user_course` tables, but also supports friend's `profile.php` needs.
+
+-- Create a table for user-specific courses added via profile page
+CREATE TABLE IF NOT EXISTS user_courses_profile (
+    user_course_profile_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    course_name VARCHAR(255) NOT NULL,
+    section VARCHAR(10) NOT NULL,
+    CONSTRAINT fk_user_id_user_courses_profile FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    UNIQUE (user_id, course_name, section) -- Prevent duplicate course-sections for a user
+);
+
+-- Create a table for available courses (to populate modal in profile.php)
+CREATE TABLE IF NOT EXISTS available_courses (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(200) NOT NULL UNIQUE
+);
+-- Optional: Populate with some initial data
+-- INSERT INTO available_courses (course_name) VALUES ('Mathematics'), ('Physics'), ('Chemistry'), ('English'), ('Computer Science I'), ('Data Structures');
+
+
+-- 14. Original `course` table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS course (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_code VARCHAR(50) UNIQUE,
+    course_name VARCHAR(200) NOT NULL,
+    credit INT NOT NULL
+);
+
+-- 15. Original `user_course` table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS user_course (
+    user_course_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    course_id INT,
+    section VARCHAR(10),
+    grade VARCHAR(5),
+    CONSTRAINT fk_user_id_user_course FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT fk_course_id_user_course FOREIGN KEY (course_id) REFERENCES course (course_id)
+);
+
+
+-- 16. routine table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS routine (
+    routine_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    course_id INT,
+    day_of_week ENUM('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),
+    start_time TIME,
+    end_time TIME,
+    room_number INT,
+    is_exam BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_user_id_routine FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT fk_course_id_routine FOREIGN KEY (course_id) REFERENCES course (course_id)
+);
+
+-- 17. installment_plan table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS installment_plan (
+    plan_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNIQUE,
+    total_fee INT,
+    num_installments INT,
+    start_date DATE,
+    CONSTRAINT fk_user_id_installment_plan FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- 18. installment table (KEEP - your original)
+CREATE TABLE IF NOT EXISTS installment (
+    installment_id INT AUTO_INCREMENT PRIMARY KEY,
+    plan_id INT,
+    due_date DATE,
+    amount INT,
+    CONSTRAINT fk_plan_id_installment FOREIGN KEY (plan_id) REFERENCES installment_plan (plan_id) ON DELETE CASCADE
+);
+
+-- Messages table (from previous chat merge)
+CREATE TABLE IF NOT EXISTS messages (
+  msg_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  incoming_msg_id INT(255) NOT NULL,
+  outgoing_msg_id INT(255) NOT NULL,
+  msg VARCHAR(1000) NOT NULL
+);
+
+-- Add foreign key constraints to messages table, referencing the unified users table
+-- NOTE: If users already exist and unique_id is null, you'll need to populate unique_id for existing users
+-- before adding these foreign key constraints, or modify the constraints to allow null.
+-- We are keeping unique_id NOT NULL so we assume it will be populated.
+ALTER TABLE messages
+ADD CONSTRAINT fk_incoming_user
+FOREIGN KEY (incoming_msg_id) REFERENCES users(unique_id) ON DELETE CASCADE,
+ADD CONSTRAINT fk_outgoing_user
+FOREIGN KEY (outgoing_msg_id) REFERENCES users(unique_id) ON DELETE CASCADE;

@@ -1,0 +1,343 @@
+/* Admin-Dashboard/css/header_sidebar.css */
+
+.header-item1 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar h3{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.search-bar i {
+  font-size: 2rem;
+}
+
+.search-bar input{
+  padding: 0.5rem 15em;
+  border-radius: 10px;
+  border: none;
+  background-color:rgba(226, 232, 240, 255);
+}
+
+.notification{
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-self: end;
+  margin-right: 1rem;
+}
+
+.notification i {
+  font-size: 2.4rem;
+  color: var(--black);
+}
+
+.notification img{
+  height: 4.5rem;
+  width: 4.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+}
+
+.nav-icon {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.nav-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
+}
+
+.chat-icon-button {
+    font-size: 2.4rem;
+    color: var(--black);
+}
+
+.chat-icon-button:hover {
+    color: var(--primary);
+}
+
+.coin-reputation {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-right: 15px;
+}
+
+.coin-balance, .reputation-points {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.coin-balance i {
+  color: #FFD700;
+}
+
+.reputation-points i {
+  color: #FFD700;
+}
+
+.user-stats {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-right: 15px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+
+.stat-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.stat-item i {
+  color: #FFD700;
+}
+
+.currency-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.message-btn, .notification-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.message-btn:hover, .notification-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.message-btn i, .notification-btn i {
+  font-size: 24px;
+  color: var(--black);
+}
+
+/* Sidebar Specifics */
+.sidebar nav {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 3rem;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.sidebar .menu {
+  padding: 20px;
+}
+
+.sidebar .menu img {
+  display: block;
+  margin: 0 auto;
+}
+
+.sidebar .menu-general { /* menu-settings is removed from HTML */
+  display: grid;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .sidebar-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 8px 12px;
+  color: var(--white);
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 4px 0;
+  text-decoration: none;
+}
+
+.sidebar .sidebar-item i {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.sidebar .sidebar-item span {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.sidebar .sidebar-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--primary);
+  padding-left: 8px;
+}
+
+.sidebar .sidebar-item:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(3px);
+}
+
+/* Styles for Notification Dropdown (moved from index.php <style> block) */
+.notification-bell-container {
+    position: relative;
+    display: flex; /* To align bell and badge */
+    align-items: center;
+}
+
+.notification-badge {
+    background-color: #ff4d4f; /* Red for unread */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    z-index: 1;
+    min-width: 18px; /* Ensure circular shape for double digits */
+    text-align: center;
+    display: none; /* Hidden by default, shown if count > 0 */
+}
+
+.notifications-dropdown {
+    position: absolute;
+    top: 50px; /* Adjust based on header height */
+    right: 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 320px; /* Wider for notification content */
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none; /* Hidden by default */
+    animation: fadeIn 0.2s ease-out;
+    padding: 10px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.notifications-dropdown h4 {
+    padding: 10px 15px;
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--black);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notifications-dropdown h4 .mark-all-read {
+    font-size: 1.2rem;
+    color: var(--primary);
+    cursor: pointer;
+    text-decoration: underline;
+}
+.notifications-dropdown h4 .mark-all-read:hover {
+    color: var(--primary-color-hover);
+}
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: #f5f5f5;
+}
+
+.notification-item.unread {
+    background-color: #e8f5e9; /* Light green to highlight unread */
+    font-weight: 500;
+}
+.notification-item.unread:hover {
+    background-color: #d4edda;
+}
+
+.notification-item .notif-icon {
+    font-size: 20px;
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 2px; /* Align icon better with text */
+}
+.notification-item .notif-sender-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+
+.notification-item .notif-content {
+    flex-grow: 1;
+}
+
+.notification-item .notif-message {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.notification-item .notif-time {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.no-notifications {
+    padding: 20px 15px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+}

@@ -1,0 +1,59 @@
+/* Admin-Dashboard/css/global.css */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: 62.5%; /* 1rem = 10px */
+  --header-height: 70px; /* Adjust this value based on your header's actual height */
+  /* Previous theme colors */
+  --primary: #1992D4; /* Original primary blue */
+  --black: #000;      /* Original black */
+  --white: #fff;      /* Original white */
+  --text-color: #333; /* Dark text */
+  --text-secondary: #666; /* Secondary text */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Original shadow color */
+  --border-color: #e0e0e0; /* Original border color */
+  --content-bg: #e8f1f2; /* Light blue-grey background for main content area */
+  --primary-color-hover: #1565C0; /* Added for consistency, already in other CSS */
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'roboto';
+  background-color: var(--content-bg);
+  display: block; /* Ensure body is block level */
+  height: 100vh; /* Make body take full viewport height */
+  overflow: hidden; /* Hide body overflow to manage scrolling in .content */
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
