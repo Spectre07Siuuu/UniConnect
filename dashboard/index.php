@@ -139,14 +139,7 @@ try {
     'css/calculators.css',
     'css/responsive.css',
 ]); ?>
-  <body>
-    <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars($user_student_id); ?>">
-
-    <div class="container">
-<?php renderDashboardSidebar('home'); ?>
-
-      <div class="content">
-<?php renderDashboardHeader('Hello, <strong>' . htmlspecialchars($full_name) . '</strong>', $coins, $profile_picture); ?>
+<?php renderDashboardShellStart('home', 'Hello, <strong>' . htmlspecialchars($full_name) . '</strong>', $coins, $profile_picture, $user_student_id); ?>
 
         <div class="content-main">
           <div class="content-left">
@@ -201,8 +194,6 @@ try {
             </div>
           </div>
         </div>
-      </div>
-    </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // --- Like button interactions (re-attached dynamically) ---
@@ -608,6 +599,4 @@ try {
         }
       });
     </script>
-    <script src="javascript/notifications.js"></script>
-  </body>
-</html>
+<?php renderDashboardShellEnd(); ?>

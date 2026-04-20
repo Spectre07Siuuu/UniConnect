@@ -145,3 +145,36 @@ function renderDashboardHeader(string $titleHtml, int $coins, string $profilePic
         </div>
 <?php
 }
+
+function renderDashboardShellStart(
+    string $activePage,
+    string $titleHtml,
+    int $coins,
+    string $profilePicture,
+    ?string $userStudentId
+): void {
+    ?>
+  <body>
+    <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars((string) $userStudentId); ?>">
+
+    <div class="container">
+<?php renderDashboardSidebar($activePage); ?>
+
+      <div class="content">
+<?php renderDashboardHeader($titleHtml, $coins, $profilePicture); ?>
+<?php
+}
+
+function renderDashboardShellEnd(array $pageScripts = []): void
+{
+    $scripts = array_values(array_unique(array_merge($pageScripts, ['javascript/notifications.js'])));
+    ?>
+      </div>
+    </div>
+<?php foreach ($scripts as $script): ?>
+    <script src="<?php echo htmlspecialchars($script); ?>"></script>
+<?php endforeach; ?>
+  </body>
+</html>
+<?php
+}

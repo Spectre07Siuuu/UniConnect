@@ -59,14 +59,7 @@ $exam_types = ['midterm', 'final', 'quiz', 'assignment', 'other'];
     'css/modals.css',
     'css/responsive.css',
 ]); ?>
-<body>
-    <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars($user_student_id); ?>">
-
-    <div class="container">
-<?php renderDashboardSidebar('notes'); ?>
-
-        <div class="content">
-<?php renderDashboardHeader('Notes &amp; Study Materials', $coins, $profile_picture); ?>
+<?php renderDashboardShellStart('notes', 'Notes &amp; Study Materials', $coins, $profile_picture, $user_student_id); ?>
 
             <div class="content-main single-column-layout">
                 <div class="content-left">
@@ -157,9 +150,6 @@ $exam_types = ['midterm', 'final', 'quiz', 'assignment', 'other'];
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
     <div id="reviewModal" class="review-modal">
         <div class="review-modal-content">
             <span class="close-button">&times;</span>
@@ -484,7 +474,4 @@ $exam_types = ['midterm', 'final', 'quiz', 'assignment', 'other'];
             loadNotes();
         });
     </script>
-    <script src="javascript/notifications.js"></script>
-</body>
-
-</html>
+<?php renderDashboardShellEnd(); ?>

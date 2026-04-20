@@ -412,14 +412,7 @@ try {
     'css/calculators.css',
     'css/responsive.css',
 ]); ?>
-  <body>
-    <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars($user_student_id); ?>">
-
-    <div class="container">
-<?php renderDashboardSidebar('profile'); ?>
-
-      <div class="content">
-<?php renderDashboardHeader('Profile', $coins, $profile_picture); ?>
+<?php renderDashboardShellStart('profile', 'Profile', $coins, $profile_picture, $user_student_id); ?>
 
         <?php if ($updateSuccess): ?>
           <div class="alert success"><i class="mdi mdi-check-circle"></i> <?php echo htmlspecialchars($updateSuccess); ?></div>
@@ -615,8 +608,4 @@ try {
             </div>
         </div>
     </div>
-
-    <script src="javascript/profile.js"></script>
-    <script src="javascript/notifications.js"></script>
-  </body>
-</html>
+<?php renderDashboardShellEnd(['javascript/profile.js']); ?>

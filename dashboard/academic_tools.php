@@ -19,14 +19,7 @@ $profile_picture = $shell_data['profile_picture'];
     'css/modals.css',
     'css/responsive.css',
 ]); ?>
-  <body>
-    <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars($user_student_id); ?>">
-
-    <div class="container">
-<?php renderDashboardSidebar('academic_tools'); ?>
-
-      <div class="content">
-<?php renderDashboardHeader('Academic Tools', $coins, $profile_picture); ?>
+<?php renderDashboardShellStart('academic_tools', 'Academic Tools', $coins, $profile_picture, $user_student_id); ?>
 
         <div class="content-main">
           <div id="academic-tools-display-area" class="academic-tools-grid">
@@ -44,8 +37,6 @@ $profile_picture = $shell_data['profile_picture'];
             <p>More exciting features coming soon!</p>
           </div>
         </div>
-        </div>
-      </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -115,6 +106,4 @@ $profile_picture = $shell_data['profile_picture'];
         }
     });
     </script>
-    <script src="javascript/notifications.js"></script>
-  </body>
-</html>
+<?php renderDashboardShellEnd(); ?>
