@@ -2,6 +2,7 @@
 // Include authentication check
 require_once 'check_auth.php'; // Uses the updated check_auth.php
 require_once '../config/db_connect.php'; // Uses the updated db_connect.php
+require_once __DIR__ . '/includes/layout.php';
 
 // Get user's student_id from session (now $_SESSION['user_id'] holds student_id)
 $user_student_id = $_SESSION['user_id'] ?? null;
@@ -404,103 +405,21 @@ try {
 
 // --- HTML Structure ---
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile - UniConnect</title>
-    <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/header_sidebar.css" />
-    <link rel="stylesheet" href="css/profile.css" />
-    <link rel="stylesheet" href="css/modals.css" />
-    <link rel="stylesheet" href="css/academic_tools.css" /> <link rel="stylesheet" href="css/calculators.css" /> <link rel="stylesheet" href="css/responsive.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css"
-      rel="stylesheet"
-    />
-  </head>
-
+<?php renderDashboardHead('Profile - UniConnect', [
+    'css/profile.css',
+    'css/modals.css',
+    'css/academic_tools.css',
+    'css/calculators.css',
+    'css/responsive.css',
+]); ?>
   <body>
     <input type="hidden" id="currentUserId" value="<?php echo htmlspecialchars($user_student_id); ?>">
 
     <div class="container">
-      <div class="sidebar">
-        <nav>
-          <div class="menu">
-            <a href="#">
-              <img
-                src="../images/uniconnect.png"
-                alt="Uniconnect Logo"
-                style="width: 120px; height: auto; margin: 10px 0;"
-              />
-            </a>
-          </div>
-
-          <div class="menu-general">
-            <a href="profile.php" class="sidebar-item active"
-              ><i class="mdi mdi-card-account-details"></i>
-              <span>Profile</span></a
-            >
-            <a href="index.php" class="sidebar-item"
-              ><i class="mdi mdi-home"></i> <span>Home</span></a
-            >
-            <?php /* Removed Study Group link */ ?>
-            <a href="notes.php" class="sidebar-item"
-              ><i class="mdi mdi-note-text-outline"></i> <span>Notes</span></a
-            >
-            <a href="academic_tools.php" class="sidebar-item"
-              ><i class="mdi mdi-tools"></i> <span>Academic Tools</span></a
-            >
-            <a href="../auth/logout.php" class="sidebar-item"
-              ><i class="mdi mdi-logout"></i> <span>Logout</span></a
-            >
-          </div>
-          </nav>
-      </div>
+<?php renderDashboardSidebar('profile'); ?>
 
       <div class="content">
-        <div class="header">
-          <div class="header-item1">
-            <div class="search-bar">
-              <h3>Profile</h3>
-            </div>
-            <div class="notification">
-              <div class="coin-reputation">
-                <span class="coin-balance">
-                  <i class="mdi mdi-currency-usd"></i>
-                  <?php echo htmlspecialchars($coins); ?>
-                </span>
-                </div>
-              <a href="chat/users.php" class="nav-icon chat-icon-button" title="Open Chat">
-                  <i class="mdi mdi-message-outline"></i>
-              </a>
-              <div class="notification-bell-container">
-                  <i class="mdi mdi-bell-ring-outline nav-icon" id="notificationBell"></i>
-                  <span class="notification-badge" id="notificationBadge">0</span>
-                  <div class="notifications-dropdown" id="notificationsDropdown">
-                      <h4>Notifications <span class="mark-all-read" id="markAllRead">Mark all as read</span></h4>
-                      <ul class="notifications-list" id="notificationsList">
-                          <li class="no-notifications">No notifications to show.</li>
-                      </ul>
-                  </div>
-              </div>
-              <img
-                src="<?php echo htmlspecialchars($profile_picture); ?>"
-                alt="Profile"
-                class="nav-icon profile-img"
-                onerror="this.src='../images/uniconnect.png'; this.style.padding='2px';"
-              />
-            </div>
-          </div>
-        </div>
+<?php renderDashboardHeader('Profile', $coins, $profile_picture); ?>
 
         <?php if ($updateSuccess): ?>
           <div class="alert success"><i class="mdi mdi-check-circle"></i> <?php echo htmlspecialchars($updateSuccess); ?></div>

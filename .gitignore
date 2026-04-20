@@ -4,13 +4,38 @@ desktop.ini
 
 .idea/
 .vscode/
+.history/
 
 *.log
 *.tmp
 *.bak
 *.swp
+*.swo
+*.cache
 
 vendor/
 node_modules/
 
+.env
+.env.*
+!.env.example
+
+composer.phar
+.phpunit.result.cache
+
+# Local generated uploads and media
+uploads/group_chat_files/*
+uploads/notes/*
+images/posts/*
+images/profile_pictures/*
+
+# Keep placeholder files if you add them later
+!uploads/group_chat_files/.gitkeep
+!uploads/notes/.gitkeep
+!images/posts/.gitkeep
+!images/profile_pictures/.gitkeep
+
+# Local database/reference artifacts
 database/database_schema.pdf
+database/*-backup.sql
+database/*.local.sql
