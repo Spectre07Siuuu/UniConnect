@@ -1,6 +1,7 @@
 <?php
-// Start the session
-session_start();
+require_once __DIR__ . '/includes/auth_helpers.php';
+
+ensureSessionStarted();
 
 // Include database connection to update status
 require __DIR__ . '/../config/db_connect.php';
@@ -25,7 +26,5 @@ $_SESSION = array(); // Clears all session data
 // Destroy the session
 session_destroy();
 
-// Redirect to the login page
-header("Location: index.php");
-exit;
+redirectTo('index.php');
 ?>

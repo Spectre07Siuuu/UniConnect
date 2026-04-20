@@ -1,12 +1,11 @@
 <?php
-session_start();
-include_once "config.php"; // Uses the updated chat config.php
+require_once 'config.php';
 
 header('Content-Type: application/json'); // Respond with JSON
 
 $response = ['success' => false, 'status' => 'Offline now', 'message' => ''];
 
-$target_student_id = mysqli_real_escape_string($conn, $_GET['user_id'] ?? '');
+$target_student_id = trim($_GET['user_id'] ?? '');
 
 if (empty($target_student_id)) {
     $response['message'] = 'User ID not provided.';
@@ -15,11 +14,8 @@ if (empty($target_student_id)) {
 }
 
 try {
-    $sql = "SELECT status FROM users WHERE student_id = '{$target_student_id}'";
-    $query = mysqli_query($conn, $sql);
-
-    if ($query && mysqli_num_rows($query) > 0) {
-        $user_data = mysqli_fetch_assoc($query);
+    $user_data = chatFetchUser($pdo, $target_student_id);
+    if ($user_data) {
         $response['success'] = true;
         $response['status'] = $user_data['status'];
     } else {

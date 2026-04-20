@@ -1,6 +1,7 @@
 <?php
-// Start session at the beginning of the file
-session_start();
+require_once __DIR__ . '/includes/auth_helpers.php';
+
+ensureSessionStarted();
 
 // Include the database connection
 // This db_connect.php (the new one from Step 2.1) will ensure tables are set up.

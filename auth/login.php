@@ -1,6 +1,7 @@
 <?php
-// Start session first
-session_start();
+require_once __DIR__ . '/includes/auth_helpers.php';
+
+ensureSessionStarted();
 require __DIR__ . '/../config/db_connect.php';
 
 // Check if form was submitted
@@ -10,9 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Basic validation
     if (empty($student_id) || empty($password)) {
-        $_SESSION['login_error'] = "Please fill in all fields.";
-        header("Location: index.php");
-        exit;
+        setLoginError("Please fill in all fields.");
+        redirectTo('index.php');
     }
 
     try {
@@ -41,24 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['status'] = $status_update; // Update session with new status
 
             // Redirect directly to Admin-Dashboard index
-            header("Location: ../dashboard/index.php");
-            exit;
+            redirectTo('../dashboard/index.php');
         } else {
-            // Invalid credentials - set error and redirect back to index
-            $_SESSION['login_error'] = "Invalid student ID or password.";
-            header("Location: index.php");
-            exit;
+            setLoginError("Invalid student ID or password.");
+            redirectTo('index.php');
         }
     } catch (PDOException $e) {
-        // Database error - log it and show generic error
         error_log("Login PDO Error: " . $e->getCode() . " - " . $e->getMessage());
-        $_SESSION['login_error'] = "An error occurred during login. Please try again later."; // Generic error for user
-        header("Location: index.php");
-        exit;
+        setLoginError("An error occurred during login. Please try again later.");
+        redirectTo('index.php');
     }
 } else {
-    // If someone tries to access this page directly, redirect to index
-    header("Location: index.php");
-    exit;
+    redirectTo('index.php');
 }
 ?>

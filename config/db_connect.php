@@ -1,35 +1,40 @@
 <?php
-// Database connection settings
-$host_options = ['localhost', '127.0.0.1', '::1']; // Multiple host options for robustness
-$username = 'root'; // Your MySQL username
-$password = ''; // Your MySQL password (empty for XAMPP default)
-$dbname = 'uniconnect'; // Your unified database name (MUST match your uniconnect.sql)
+require_once __DIR__ . '/env.php';
 
-$pdo = null; // Initialize PDO object
+loadProjectEnv(dirname(__DIR__) . '/.env');
+
+$host_options = array_values(array_filter(array_map(
+    'trim',
+    explode(',', envValue('UNICONNECT_DB_HOSTS', 'localhost,127.0.0.1,::1'))
+)));
+$username = envValue('UNICONNECT_DB_USER', 'root');
+$password = envValue('UNICONNECT_DB_PASS', '');
+$dbname = envValue('UNICONNECT_DB_NAME', 'uniconnect');
+$charset = envValue('UNICONNECT_DB_CHARSET', 'utf8mb4');
+
+$pdo = null;
 $connected = false;
 $last_error = '';
 
-// Try different connection methods
 foreach ($host_options as $host) {
     try {
-        error_log("Attempting PDO connection to host: " . $host);
-
-        // Attempt to connect to the specified database
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        error_log("Connected to database '$dbname' successfully using PDO.");
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $pdo = new PDO($dsn, $username, $password, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
 
         $connected = true;
-        break; // Connection successful, exit the loop
-    } catch(PDOException $e) {
+        break;
+    } catch (PDOException $e) {
         $last_error = $e->getMessage();
         error_log("Connection error to host $host or database $dbname: " . $last_error);
-        $pdo = null; // Ensure PDO is null on failure
-        // Continue to the next host option
+        $pdo = null;
     }
 }
 
 if (!$connected) {
-    die();
+    http_response_code(500);
+    die('Database connection failed.');
 }
 ?>

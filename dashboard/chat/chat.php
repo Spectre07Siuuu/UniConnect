@@ -1,41 +1,24 @@
 <?php
-    session_start();
-    include_once "php/config.php"; // Uses the updated chat config.php
+    require_once 'php/config.php';
 
-    // Get the logged-in user's student_id from the main session for authentication
-    $outgoing_student_id = $_SESSION['user_id'] ?? null; // $_SESSION['user_id'] now stores student_id
-
-    // If student_id is not set, redirect to the main login page
+    $outgoing_student_id = chatCurrentUserId();
     if (!$outgoing_student_id) {
-        header("location: ../../auth/index.php");
-        exit();
+        redirectTo('../../auth/index.php');
     }
 
-    // Get the incoming user's student_id from the URL parameter
-    // This is the student_id of the person the logged-in user wants to chat with
-    $incoming_student_id = mysqli_real_escape_string($conn, $_GET['user_id'] ?? '');
-
-    // If no user_id (student_id) is provided in GET, redirect back to the users list
-    if (empty($incoming_student_id)) {
-        header("location: users.php");
-        exit();
+    $incoming_student_id = trim($_GET['user_id'] ?? '');
+    if ($incoming_student_id === '') {
+        redirectTo('users.php');
     }
 
-    // Fetch the incoming chat partner's data from the 'users' table
-    // We need their full_name, profile_picture, and status
-    $sql_incoming_user = mysqli_query($conn, "SELECT full_name, profile_picture, status FROM users WHERE student_id = '{$incoming_student_id}'");
-
-    if(mysqli_num_rows($sql_incoming_user) > 0){
-        $incoming_user_row = mysqli_fetch_assoc($sql_incoming_user);
-        $chat_partner_name = $incoming_user_row['full_name'];
-        // Ensure profile picture path is relative to root for display
-        $chat_partner_profile_img = $incoming_user_row['profile_picture'];
-        $chat_partner_status = $incoming_user_row['status']; // Initial status
-    } else {
-        // If incoming user not found, redirect back to the users list
-        header("location: users.php");
-        exit();
+    $incoming_user_row = chatFetchUser($pdo, $incoming_student_id);
+    if (!$incoming_user_row) {
+        redirectTo('users.php');
     }
+
+    $chat_partner_name = $incoming_user_row['full_name'];
+    $chat_partner_profile_img = $incoming_user_row['profile_picture'];
+    $chat_partner_status = $incoming_user_row['status'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +35,7 @@
       <header>
         <a href="users.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
         <!-- Ensure profile image path is relative to the root for correct display -->
-        <img src="../../<?php echo htmlspecialchars($chat_partner_profile_img); ?>?t=<?php echo time(); ?>" alt="Profile Picture" onerror="this.src='../../images/uniconnect.png';" style="object-fit: cover;">
+        <img src="<?php echo htmlspecialchars(chatImagePath($chat_partner_profile_img)); ?>?t=<?php echo time(); ?>" alt="Profile Picture" onerror="this.src='../../images/uniconnect.png';" style="object-fit: cover;">
         <div class="details">
           <span><?php echo htmlspecialchars($chat_partner_name); ?></span>
           <p class="chat-partner-status"><?php echo htmlspecialchars($chat_partner_status); ?></p>

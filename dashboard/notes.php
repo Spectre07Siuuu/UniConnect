@@ -1,16 +1,8 @@
 <?php
-// Include authentication check to ensure user is logged in
 require_once 'check_auth.php';
-require_once '../config/db_connect.php';
-require_once __DIR__ . '/includes/layout.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
-// Get user's student_id from session
-$user_student_id = $_SESSION['user_id'] ?? null;
-$full_name = $_SESSION['full_name'] ?? 'User';
-
-$shell_data = getDashboardShellData($pdo, $user_student_id);
-$coins = $shell_data['coins'];
-$profile_picture = $shell_data['profile_picture'];
+extract(bootstrapDashboardPage(), EXTR_SKIP);
 
 // Prepare data for subject and exam type dropdowns in the upload/search forms
 $subjects = [
@@ -94,7 +86,7 @@ $exam_types = ['midterm', 'final', 'quiz', 'assignment', 'other'];
 
                         <div class="card create-note-card">
                             <h3>Upload New Note</h3>
-                            <form id="uploadNoteForm" enctype="multipart Caste/form-data">
+                            <form id="uploadNoteForm" enctype="multipart/form-data">
                                 <!-- Row 1: Subject + Exam Type -->
                                 <div class="form-row two-cols">
                                     <div class="form-group half-width">

@@ -1,17 +1,8 @@
 <?php
-// Include authentication check to ensure user is logged in
-require_once 'check_auth.php'; // Uses the updated check_auth.php
-require_once '../config/db_connect.php'; // Uses the updated db_connect.php
-require_once __DIR__ . '/includes/layout.php';
+require_once 'check_auth.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
-// Get user's student_id from session (now $_SESSION['user_id'] holds student_id)
-$user_student_id = $_SESSION['user_id'] ?? null;
-// Use full_name directly from session (populated in login.php)
-$full_name = $_SESSION['full_name'] ?? 'User';
-
-$shell_data = getDashboardShellData($pdo, $user_student_id);
-$coins = $shell_data['coins'];
-$profile_picture = $shell_data['profile_picture'];
+extract(bootstrapDashboardPage(), EXTR_SKIP);
 ?>
 <?php renderDashboardHead('Academic Tools - UniConnect', [
     'css/academic_tools.css',

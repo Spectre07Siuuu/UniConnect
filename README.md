@@ -64,14 +64,22 @@ database/uniconnect.sql
 
 ### 4. Verify database settings
 
-The current local config is in `config/db_connect.php` and expects:
+The app now supports environment-based database settings through `.env` with local XAMPP-friendly fallbacks.
+
+You can copy `.env.example` to `.env` and adjust:
+
+- `UNICONNECT_DB_HOSTS`
+- `UNICONNECT_DB_NAME`
+- `UNICONNECT_DB_USER`
+- `UNICONNECT_DB_PASS`
+- `UNICONNECT_DB_CHARSET`
+
+If `.env` is missing, `config/db_connect.php` falls back to the current local defaults:
 
 - host: `localhost`, `127.0.0.1`, or `::1`
 - username: `root`
 - password: empty string
 - database: `uniconnect`
-
-Update that file if your local MySQL credentials differ.
 
 ### 5. Open the app
 

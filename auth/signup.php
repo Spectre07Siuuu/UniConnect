@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/includes/auth_helpers.php';
 require __DIR__ . '/../config/db_connect.php';
 
 // Check if form was submitted
@@ -48,11 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If there are errors, display them and redirect
     if (!empty($errors)) {
         $error_message = implode("\\n", $errors);
-        // Using session for error messages to display on index.php
-        session_start();
-        $_SESSION['login_error'] = $error_message; // Using login_error for general signup errors
-        header("Location: index.php");
-        exit;
+        setLoginError($error_message);
+        redirectTo('index.php');
     }
 
     try {
@@ -60,20 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE student_id = ?");
         $stmt->execute([$student_id]);
         if ($stmt->fetchColumn() > 0) {
-            session_start();
-            $_SESSION['login_error'] = 'Student ID already exists.';
-            header("Location: index.php");
-            exit;
+            setLoginError('Student ID already exists.');
+            redirectTo('index.php');
         }
 
         // Check if email exists
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetchColumn() > 0) {
-            session_start();
-            $_SESSION['login_error'] = 'Email already exists.';
-            header("Location: index.php");
-            exit;
+            setLoginError('Email already exists.');
+            redirectTo('index.php');
         }
 
         // Hash the password
@@ -102,34 +96,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $default_trimester, $default_profile_picture, $default_bio, $default_profile_completion, $default_reward_claimed,
             $default_coin_balance, $default_reputation_points, $default_status
         ])) {
-            // Start session and set success message
-            session_start();
-            $_SESSION['signup_success'] = true;
-
-            // Redirect to login page
-            header("Location: index.php");
-            exit;
+            setSignupSuccess();
+            redirectTo('index.php');
         } else {
-            session_start();
-            $_SESSION['login_error'] = 'Error creating account. Please try again.';
-            header("Location: index.php");
-            exit;
+            setLoginError('Error creating account. Please try again.');
+            redirectTo('index.php');
         }
     } catch (PDOException $e) {
         error_log("Signup PDO error: " . $e->getCode() . " - " . $e->getMessage());
-        session_start();
-        // Use a more specific error message for duplicate entry (PK or unique constraint violation)
         if ($e->getCode() == 23000) {
-             $_SESSION['login_error'] = 'Student ID or Email already registered. Please login or use a different one.';
+             setLoginError('Student ID or Email already registered. Please login or use a different one.');
         } else {
-            $_SESSION['login_error'] = 'An unexpected error occurred during signup. Please try again later.';
+            setLoginError('An unexpected error occurred during signup. Please try again later.');
         }
-        header("Location: index.php");
-        exit;
+        redirectTo('index.php');
     }
 } else {
-    // If someone tries to access this page directly, redirect to index
-    header("Location: index.php");
-    exit;
+    redirectTo('index.php');
 }
 ?>
