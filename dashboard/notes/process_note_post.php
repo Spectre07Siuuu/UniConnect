@@ -1,9 +1,17 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json');
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
+
+// Validate CSRF token
+if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+    $response['message'] = 'Invalid or missing security token.';
+    echo json_encode($response);
+    exit();
+}
 
 if (!isset($_SESSION['user_id'])) {
     $response['message'] = 'Authentication required.';
@@ -12,10 +20,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id']; // The ID of the user uploading the note
-$title = trim(htmlspecialchars($_POST['title'] ?? basename($_FILES['note_file']['name'], '.' . pathinfo($_FILES['note_file']['name'], PATHINFO_EXTENSION))));
-$description = trim(htmlspecialchars($_POST['description'] ?? ''));
-$subject = trim(htmlspecialchars($_POST['subject'] ?? ''));
-$exam_type = trim(htmlspecialchars($_POST['exam_type'] ?? ''));
+$title = trim($_POST['title'] ?? basename($_FILES['note_file']['name'] ?? '', '.' . pathinfo($_FILES['note_file']['name'] ?? '', PATHINFO_EXTENSION)));
+$description = trim($_POST['description'] ?? '');
+$subject = trim($_POST['subject'] ?? '');
+$exam_type = trim($_POST['exam_type'] ?? '');
 $file_path = null;
 $thumbnail_path = null; // Assuming no thumbnail generation for now, but column exists
 
@@ -109,7 +117,7 @@ try {
             $stmt_uploader_name->execute([$user_id]);
             $uploader_name = $stmt_uploader_name->fetchColumn();
 
-            $notification_message = htmlspecialchars($uploader_name) . " uploaded a new note for " . htmlspecialchars($subject) . ": \"" . htmlspecialchars($title) . "\"";
+            $notification_message = $uploader_name . " uploaded a new note for " . $subject . ": \"" . $title . "\"";
             // Correct link to the notes page
             $notification_link = 'dashboard/notes.php';
 
@@ -120,7 +128,7 @@ try {
         }
 
         // Notify the uploader themselves if coins were awarded (Coin/Reputation Change)
-        $uploader_notification_message = "You gained 5 coins for uploading note: \"" . htmlspecialchars($title) . "\"";
+        $uploader_notification_message = "You gained 5 coins for uploading note: \"" . $title . "\"";
         $uploader_notification_link = 'dashboard/notes.php'; // Link to their notes
 
         $stmt_notify_uploader = $pdo->prepare("INSERT INTO notifications (user_id, sender_id, type, message, link) VALUES (?, ?, ?, ?, ?)");

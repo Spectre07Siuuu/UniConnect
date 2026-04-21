@@ -4,45 +4,17 @@ require_once __DIR__ . '/includes/bootstrap.php';
 
 extract(bootstrapDashboardPage(), EXTR_SKIP);
 
-// Prepare data for subject and exam type dropdowns in the upload/search forms
-$subjects = [
-    'Intensive English I',
-    'Intensive English II',
-    'Society, Environment and Engineering Ethics',
-    'Project Management',
-    'Physics',
-    'Physics Laboratory',
-    'Biology for Engineers',
-    'Fundamental Calculus',
-    'Calculus and Linear Algebra',
-    'Coordinate Geometry and Vector Analysis',
-    'Probability and Statistics',
-    'Electrical Circuits',
-    'Electronics',
-    'Electronics Laboratory',
-    'Green Computing',
-    'Introduction to Computer Systems',
-    'Structured Programming Language',
-    'Structured Programming Language Laboratory',
-    'Object Oriented Programming',
-    'Object Oriented Programming Laboratory',
-    'Advanced Object Oriented Programming Lab',
-    'Web Programming',
-    'Mobile Application Development',
-    'Digital Logic Design',
-    'Digital Logic Design Laboratory',
-    'Computer Architecture',
-    'Microprocessors and Microcontrollers',
-    'Microprocessors and Microcontrollers Laboratory',
-    'Discrete Mathematics',
-    'Data Structure and Algorithms I',
-    'Data Structure and Algorithms I Laboratory',
-    'Artificial Intelligence',
-    'AI101L',
-    'Database Management Systems',
-    'Database Management Systems Laboratory'
-];
-sort($subjects); // Sort alphabetically
+// Fetch subjects from DB (available_courses) so notes and courses stay in sync
+$subjects = [];
+try {
+    $stmt_subjects = $pdo->prepare("SELECT course_name FROM available_courses ORDER BY course_name");
+    $stmt_subjects->execute();
+    $subjects = $stmt_subjects->fetchAll(PDO::FETCH_COLUMN);
+} catch (PDOException $e) {
+    error_log("Error fetching subjects for notes page: " . $e->getMessage());
+    // Fall back to an empty list; the "All Subjects" option will still work
+    $subjects = [];
+}
 
 $exam_types = ['midterm', 'final', 'quiz', 'assignment', 'other'];
 ?>

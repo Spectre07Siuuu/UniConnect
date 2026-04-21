@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../auth/includes/auth_helpers.php';
+
 function getDashboardShellData(PDO $pdo, ?string $userStudentId): array
 {
     $shell = [
@@ -41,12 +43,14 @@ function renderDashboardHead(string $title, array $pageStyles = []): void
         'css/header_sidebar.css',
     ];
     $styles = array_values(array_unique(array_merge($baseStyles, $pageStyles)));
+    $csrfToken = generateCsrfToken();
     ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<?php echo htmlspecialchars($csrfToken); ?>">
     <title><?php echo htmlspecialchars($title); ?></title>
 <?php foreach ($styles as $style): ?>
     <link rel="stylesheet" href="<?php echo htmlspecialchars($style); ?>" />
@@ -167,7 +171,7 @@ function renderDashboardShellStart(
 
 function renderDashboardShellEnd(array $pageScripts = []): void
 {
-    $scripts = array_values(array_unique(array_merge($pageScripts, ['javascript/notifications.js'])));
+    $scripts = array_values(array_unique(array_merge(['javascript/csrf.js'], $pageScripts, ['javascript/notifications.js'])));
     ?>
       </div>
     </div>

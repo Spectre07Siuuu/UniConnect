@@ -98,9 +98,9 @@
               </div>
               <div class="skills-list">
                 <?php foreach ($skills_data as $skill): ?>
-                  <div class="skill-card">
+                  <div class="skill-card" data-skill-name="<?php echo htmlspecialchars($skill); ?>">
                     <span class="skill-name"><i class="mdi mdi-check-bold"></i> <?php echo htmlspecialchars($skill); ?></span>
-                    <button type="button" class="remove-button remove-icon" onclick="removeSkill('<?php echo htmlspecialchars($skill); ?>')">
+                    <button type="button" class="remove-button remove-icon">
                       <i class="mdi mdi-close"></i>
                     </button>
                   </div>
@@ -118,12 +118,12 @@
               </div>
               <div class="courses-list">
                 <?php foreach ($courses_data as $course): ?>
-                  <div class="course-card">
+                  <div class="course-card" data-course-name="<?php echo htmlspecialchars($course['course_name']); ?>" data-section="<?php echo htmlspecialchars($course['section']); ?>">
                     <div class="course-info">
                       <span class="course-name"><i class="mdi mdi-book-open-variant"></i> <?php echo htmlspecialchars($course['course_name']); ?></span>
                       <span class="course-section"><i class="mdi mdi-tag"></i> Section <?php echo htmlspecialchars($course['section']); ?></span>
                     </div>
-                    <button type="button" class="remove-button remove-icon" onclick="removeCourse('<?php echo htmlspecialchars($course['course_name']); ?>', '<?php echo htmlspecialchars($course['section']); ?>')">
+                    <button type="button" class="remove-button remove-icon">
                       <i class="mdi mdi-close"></i>
                     </button>
                   </div>

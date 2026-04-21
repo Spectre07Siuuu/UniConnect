@@ -8,6 +8,16 @@ $updateSuccess = $updateError = $uploadError = null; // Initialize messages for 
 
 // --- Handle Profile Update Submission (AJAX and full form) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+        if (isset($_POST['action'])) {
+            echo json_encode(['success' => false, 'message' => 'Invalid or missing security token.']);
+        } else {
+            $updateError = 'Invalid or missing security token.';
+        }
+        exit;
+    }
+
     // Base upload directory for profile pictures (relative to root)
     $uploadBaseDir = 'images/profile_pictures/';
     // Full server path for profile picture uploads
@@ -39,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle AJAX request for adding/removing skill
     if (isset($_POST['action']) && ($_POST['action'] === 'add_skill' || $_POST['action'] === 'remove_skill')) {
-        $skill_name = trim(htmlspecialchars($_POST['skill_name'] ?? ''));
+        $skill_name = trim($_POST['skill_name'] ?? '');
 
         if ($user_student_id && !empty($skill_name)) {
             try {
@@ -78,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle AJAX request for adding/removing course (to user_courses_profile table)
     if (isset($_POST['action']) && ($_POST['action'] === 'add_course' || $_POST['action'] === 'remove_course')) {
-        $course_name = trim(htmlspecialchars($_POST['course_name'] ?? ''));
-        $section = trim(htmlspecialchars($_POST['section'] ?? ''));
+        $course_name = trim($_POST['course_name'] ?? '');
+        $section = trim($_POST['section'] ?? '');
 
         if ($user_student_id && !empty($course_name) && !empty($section)) {
             try {
@@ -118,8 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle AJAX request for consolidated save (trimester, bio, profile picture, all skills, all courses)
     if (isset($_POST['action']) && $_POST['action'] === 'save_all') {
-        $trimester = trim(htmlspecialchars($_POST['trimester'] ?? ''));
-        $bio = trim(htmlspecialchars($_POST['bio'] ?? ''));
+        $trimester = trim($_POST['trimester'] ?? '');
+        $bio = trim($_POST['bio'] ?? '');
         $skills = json_decode($_POST['skills'] ?? '[]', true);
         $courses = json_decode($_POST['courses'] ?? '[]', true);
         $profilePicturePath = null;
@@ -154,8 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt_old_pic->execute([':student_id' => $user_student_id]);
                         $old_profile_picture_db_path = $stmt_old_pic->fetchColumn();
 
-                        if ($old_profile_picture_db_path && $old_profile_picture_db_path !== 'images/uniconnect.png' && file_exists(__DIR__ . '/../../' . $old_profile_picture_db_path)) {
-                            unlink(__DIR__ . '/../../' . $old_profile_picture_db_path); // Delete old file
+                        if ($old_profile_picture_db_path && $old_profile_picture_db_path !== 'images/uniconnect.png' && file_exists(__DIR__ . '/../' . $old_profile_picture_db_path)) {
+                            unlink(__DIR__ . '/../' . $old_profile_picture_db_path); // Delete old file
                         }
 
                     } else {
@@ -211,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql_insert_skills = "INSERT INTO skills (user_id, skill_name) VALUES (:user_id, :skill_name)";
                 $stmt_insert_skills = $pdo->prepare($sql_insert_skills);
                 foreach ($skills as $skill) {
-                    $sanitized_skill = htmlspecialchars(trim($skill));
+                    $sanitized_skill = trim($skill);
                     if (!empty($sanitized_skill)) {
                         $stmt_insert_skills->execute([':user_id' => $user_student_id, ':skill_name' => $sanitized_skill]);
                     }
@@ -228,8 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_insert_courses = $pdo->prepare($sql_insert_courses);
                 foreach ($courses as $course) {
                      if (isset($course['course_name']) && isset($course['section'])) {
-                        $sanitized_course_name = htmlspecialchars(trim($course['course_name']));
-                        $sanitized_section = htmlspecialchars(trim($course['section']));
+                        $sanitized_course_name = trim($course['course_name']);
+                        $sanitized_section = trim($course['section']);
                          if (!empty($sanitized_course_name) && !empty($sanitized_section)) {
                             $stmt_insert_courses->execute([':user_id' => $user_student_id, ':course_name' => $sanitized_course_name, ':section' => $sanitized_section]);
                          }

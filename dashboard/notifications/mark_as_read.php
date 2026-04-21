@@ -1,10 +1,18 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json');
 
 $response = ['success' => false, 'message' => ''];
+
+// Validate CSRF token
+if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+    $response['message'] = 'Invalid or missing security token.';
+    echo json_encode($response);
+    exit();
+}
 
 $user_student_id = $_SESSION['user_id'] ?? null;
 $notification_id = filter_input(INPUT_POST, 'notification_id', FILTER_VALIDATE_INT);

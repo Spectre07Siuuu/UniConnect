@@ -1,12 +1,20 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json'); // Respond with JSON
 
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+        $response['message'] = 'Invalid or missing security token.';
+        echo json_encode($response);
+        exit();
+    }
+
     // Get user's student_id from session (the person who posted the comment)
     $user_student_id = $_SESSION['user_id'] ?? null;
     if (!$user_student_id) {
@@ -15,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Sanitize and validate input
+    // Validate input
     $post_id = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
-    $comment_text = trim(htmlspecialchars($_POST['comment_text'] ?? ''));
+    $comment_text = trim($_POST['comment_text'] ?? '');
 
     if (!$post_id) {
         $response['message'] = 'Invalid post ID.';
@@ -66,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt_commenter_name->execute([$user_student_id]);
                 $commenter_name = $stmt_commenter_name->fetchColumn();
 
-                $notification_message = htmlspecialchars($commenter_name) . " commented on your post: \"" . htmlspecialchars($post_preview) . "\"";
+                $notification_message = $commenter_name . " commented on your post: \"" . substr(strip_tags($post_info['post_text']), 0, 50) . (strlen($post_info['post_text']) > 50 ? '...' : '') . "\"";
                 // Correct link to directly scroll to the post and potentially open comments
                 // We'll use a fragment identifier for JS to pick up later
                 $notification_link = 'dashboard/index.php#post-' . $post_id . '-comments';

@@ -50,4 +50,4 @@ setInterval(() =>{
     }
   }
   xhr.send();
-}, 500); // Keep 500ms interval for responsiveness, but updates are conditional
+}, 3000); // Poll every 3 seconds
