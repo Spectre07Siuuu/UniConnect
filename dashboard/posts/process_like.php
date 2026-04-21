@@ -2,12 +2,20 @@
 // This script processes liking/unliking a post.
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json'); // Respond with JSON
 
 $response = ['success' => false, 'message' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+        $response['message'] = 'Invalid or missing security token.';
+        echo json_encode($response);
+        exit();
+    }
+
     $user_student_id = $_SESSION['user_id'] ?? null; // The person who clicked like/unlike
     $post_id = filter_input(INPUT_POST, 'post_id', FILTER_VALIDATE_INT);
     $action = $_POST['action'] ?? ''; // 'like' or 'unlike'
@@ -73,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_liker_name->execute([$user_student_id]);
                     $liker_name = $stmt_liker_name->fetchColumn();
 
-                    $notification_message = htmlspecialchars($liker_name) . " liked your post: \"" . htmlspecialchars($post_preview) . "\"";
+                    $notification_message = $liker_name . " liked your post: \"" . substr(strip_tags($post_info['post_text']), 0, 50) . (strlen($post_info['post_text']) > 50 ? '...' : '') . "\"";
                     // Correct link to directly scroll to the post on index.php
                     $notification_link = 'dashboard/index.php#post-' . $post_id;
 

@@ -1,9 +1,17 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json');
 $response = ['success' => false, 'message' => ''];
+
+// Validate CSRF token
+if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+    $response['message'] = 'Invalid or missing security token.';
+    echo json_encode($response);
+    exit();
+}
 
 if (!isset($_SESSION['user_id'])) {
     $response['message'] = 'Authentication required.';
@@ -13,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $note_id = filter_input(INPUT_POST, 'note_id', FILTER_VALIDATE_INT);
-$note_poster_id = filter_input(INPUT_POST, 'note_poster_id', FILTER_SANITIZE_STRING); // The ID of the user who posted the note
+$note_poster_id = trim($_POST['note_poster_id'] ?? ''); // The ID of the user who posted the note
 
 if (!$note_id || empty($note_poster_id)) {
     $response['message'] = 'Invalid note or poster ID.';
@@ -71,7 +79,7 @@ try {
     $note_title = $stmt_note_title->fetchColumn();
 
     // Insert 'coins_lost' notification for the downloader
-    $notification_message_lost_coins = "You spent " . $deduction_amount . " coins to download the note: \"" . htmlspecialchars($note_title) . "\".";
+    $notification_message_lost_coins = "You spent " . $deduction_amount . " coins to download the note: \"" . $note_title . "\".";
     $notification_link_lost_coins = 'dashboard/notes.php'; // Link to notes page
     $stmt_notify_lost = $pdo->prepare("INSERT INTO notifications (user_id, sender_id, type, message, link) VALUES (?, ?, ?, ?, ?)");
     $stmt_notify_lost->execute([$user_id, $user_id, 'coins_lost', $notification_message_lost_coins, $notification_link_lost_coins]);

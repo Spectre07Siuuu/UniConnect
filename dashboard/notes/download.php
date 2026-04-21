@@ -4,15 +4,30 @@ session_start();
 // It assumes check_auth.php and the coin deduction logic (from download_note.php)
 // have already been handled.
 
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    die("Authentication required.");
+}
+
 if (!isset($_GET['file'])) {
     die("File not specified.");
 }
 
-$file_path_db = $_GET['file']; // Path as stored in the database (e.g., 'uploads/notes/filename.pdf')
+// Allowed base directory for note uploads (absolute, no trailing slash)
+$allowed_base = realpath(__DIR__ . '/../../uploads/notes');
+if ($allowed_base === false) {
+    die("Server configuration error.");
+}
 
-// Construct the full absolute path to the file
-// Path from Admin-Dashboard/notes/ to uniconnect/uploads/notes/
-$full_file_path = __DIR__ . '/../../' . $file_path_db;
+// Strip any directory-separator prefix to prevent traversal before joining
+$file_path_db = ltrim(basename(dirname($_GET['file'])) . '/' . basename($_GET['file']), '/');
+// Resolve the full path and verify it is inside the allowed base
+$full_file_path = realpath($allowed_base . '/' . basename($_GET['file']));
+
+if ($full_file_path === false || strncmp($full_file_path, $allowed_base . DIRECTORY_SEPARATOR, strlen($allowed_base) + 1) !== 0) {
+    http_response_code(403);
+    die("Access denied.");
+}
 
 if (!file_exists($full_file_path)) {
     die("File not found.");

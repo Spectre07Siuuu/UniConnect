@@ -1,12 +1,20 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json'); // Respond with JSON
 
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token
+    if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+        $response['message'] = 'Invalid or missing security token.';
+        echo json_encode($response);
+        exit();
+    }
+
     // Get user's student_id from session
     $user_student_id = $_SESSION['user_id'] ?? null;
     if (!$user_student_id) {
@@ -15,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Sanitize and validate input
-    $post_text = trim(htmlspecialchars($_POST['post_text'] ?? ''));
-    $category = trim(htmlspecialchars($_POST['category'] ?? 'general'));
+    // Retrieve raw input – escaping is done only at output time
+    $post_text = trim($_POST['post_text'] ?? '');
+    $category = trim($_POST['category'] ?? 'general');
 
     // Validate category against allowed ENUM values
     $allowed_categories = ['general', 'academic', 'buy-sell', 'lost-found'];

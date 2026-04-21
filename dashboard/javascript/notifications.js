@@ -163,19 +163,19 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // Handle click on notification item
             listItem.addEventListener('click', function(event) {
                 event.preventDefault(); // Prevent default link behavior
                 markNotificationAsRead(notif.notification_id, false); // Mark this specific one as read
                 notificationsDropdown.style.display = 'none'; // Close dropdown
 
                 if (notif.link) {
+                    const baseUrl = window.location.origin + window.location.pathname.split('dashboard/')[0];
                     // Handle navigation for specific content
                     if (notif.type === 'comment_post' || notif.type === 'like_post') {
                         // For comments and likes, navigate to index.php with the post ID hash
-                        // Ensure the base URL is correct regardless of current page
-                        const baseUrl = window.location.origin + window.location.pathname.split('dashboard/')[0] + 'dashboard/index.php';
-                        window.location.href = baseUrl + '#' + notif.link.split('#')[1];
+                        const targetUrl = baseUrl + 'dashboard/index.php';
+                        const hashPart = notif.link.includes('#') ? '#' + notif.link.split('#')[1] : '';
+                        window.location.href = targetUrl + hashPart;
 
                         // Scroll to the post and potentially open comments after a slight delay
                         // This part runs ONLY if we navigate to index.php. If already on index.php, it will immediately try to scroll/open.
@@ -196,11 +196,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         }, 500); // Adjust delay if needed
                     } else if (notif.type === 'new_pm') {
-                        // Direct navigation to chat
-                       markNotificationAsRead(notif.notification_id, false);
+                        // Navigate directly to the chat with the sender
+                        window.location.href = baseUrl + notif.link;
                     } else {
-                        // For other links (new_note_upload, coins_gained, coins_lost, reputation_gained, etc.), simple navigation
-                        markNotificationAsRead(notif.notification_id, false);
+                        // For all other notification types, navigate using the stored link
+                        window.location.href = baseUrl + notif.link;
                     }
                 }
             });
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append('notification_id', notifId);
         }
 
-        fetch('notifications/mark_as_read.php', {
+        csrfFetch('notifications/mark_as_read.php', {
             method: 'POST',
             body: formData
         })

@@ -1,5 +1,11 @@
 <?php
     require_once 'config.php';
+    require_once '../../../auth/includes/auth_helpers.php';
+
+    // Validate CSRF token
+    if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+        exit(); // Silently reject in the chat AJAX context
+    }
 
     $outgoing_student_id = chatCurrentUserId();
     $incoming_student_id = trim($_POST['incoming_id'] ?? '');
@@ -26,7 +32,7 @@
 
             $message_preview = substr($message, 0, 50) . (strlen($message) > 50 ? '...' : '');
 
-            $notification_message = htmlspecialchars($sender_name) . " sent you a new message: \"" . htmlspecialchars($message_preview) . "\"";
+            $notification_message = $sender_name . " sent you a new message: \"" . substr($message, 0, 50) . (strlen($message) > 50 ? '...' : '') . "\"";
             // Correct link to directly open the chat with the sender
             $notification_link = 'dashboard/chat/chat.php?user_id=' . urlencode($outgoing_student_id);
 

@@ -20,6 +20,7 @@ inputField.onkeyup = ()=>{
 sendBtn.onclick = ()=>{
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "php/insert-chat.php", true);
+    xhr.setRequestHeader("X-CSRF-Token", window.getCsrfToken ? window.getCsrfToken() : '');
     xhr.onload = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){
@@ -55,7 +56,7 @@ setInterval(() =>{
     }
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("incoming_id="+incoming_id);
-}, 500);
+}, 3000);
 
 function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;

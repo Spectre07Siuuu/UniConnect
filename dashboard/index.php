@@ -163,7 +163,7 @@ try {
           formData.append('post_id', postId);
           formData.append('action', action);
 
-          fetch('posts/process_like.php', {
+          csrfFetch('posts/process_like.php', {
               method: 'POST',
               body: formData
             })
@@ -271,7 +271,7 @@ try {
           formData.append('post_id', postId);
           formData.append('comment_text', commentText);
 
-          fetch('posts/process_comment.php', {
+          csrfFetch('posts/process_comment.php', {
               method: 'POST',
               body: formData
             })
@@ -361,7 +361,7 @@ try {
                 postSubmitButton.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Posting...';
                 postSubmitButton.disabled = true;
 
-                fetch('posts/process_post.php', {
+                csrfFetch('posts/process_post.php', {
                     method: 'POST',
                     body: formData
                 })

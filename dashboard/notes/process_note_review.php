@@ -1,9 +1,17 @@
 <?php
 session_start();
 require_once '../../config/db_connect.php'; // Path to root db_connect.php
+require_once '../../auth/includes/auth_helpers.php';
 
 header('Content-Type: application/json');
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
+
+// Validate CSRF token
+if (!validateCsrfToken(getCsrfTokenFromRequest())) {
+    $response['message'] = 'Invalid or missing security token.';
+    echo json_encode($response);
+    exit();
+}
 
 if (!isset($_SESSION['user_id'])) {
     $response['message'] = 'Authentication required.';
@@ -13,8 +21,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $reviewer_id = $_SESSION['user_id'];
 $note_id = filter_input(INPUT_POST, 'note_id', FILTER_VALIDATE_INT);
-$rating_category = trim(htmlspecialchars($_POST['rating'] ?? ''));
-$review_text = trim(htmlspecialchars($_POST['review_text'] ?? ''));
+$rating_category = trim($_POST['rating'] ?? '');
+$review_text = trim($_POST['review_text'] ?? '');
 
 if (!$note_id || empty($rating_category)) {
     $response['message'] = 'Note ID and rating are required.';
@@ -93,7 +101,7 @@ try {
         $stmt_reviewer_name->execute([$reviewer_id]);
         $reviewer_name = $stmt_reviewer_name->fetchColumn();
 
-        $notification_message_reputation = "You gained " . $points_to_award . " reputation points! Your note \"" . htmlspecialchars($note_title) . "\" was reviewed by " . htmlspecialchars($reviewer_name) . ".";
+        $notification_message_reputation = "You gained " . $points_to_award . " reputation points! Your note \"" . $note_title . "\" was reviewed by " . $reviewer_name . ".";
         $notification_link_reputation = 'dashboard/profile.php'; // Link to their profile (where reputation is visible)
 
         $stmt_notify_reputation = $pdo->prepare("INSERT INTO notifications (user_id, sender_id, type, message, link) VALUES (?, ?, ?, ?, ?)");
@@ -106,7 +114,7 @@ try {
     $reviewer_name_for_review = $stmt_reviewer_name_for_review->fetchColumn();
 
     $review_type_message = str_replace('_', ' ', $rating_category); // e.g., "very helpful", "not helpful"
-    $notification_message_review = htmlspecialchars($reviewer_name_for_review) . " reviewed your note \"" . htmlspecialchars($note_title) . "\" as " . htmlspecialchars($review_type_message) . ".";
+    $notification_message_review = $reviewer_name_for_review . " reviewed your note \"" . $note_title . "\" as " . $review_type_message . ".";
     $notification_link_review = 'dashboard/notes.php'; // Link to the notes page
 
     $stmt_notify_review = $pdo->prepare("INSERT INTO notifications (user_id, sender_id, type, message, link) VALUES (?, ?, ?, ?, ?)");

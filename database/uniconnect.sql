@@ -1,3 +1,6 @@
+-- WARNING: The following statement drops and recreates the entire database.
+-- This is intended ONLY for initial local development setup.
+-- Never run this file against a production or shared database.
 DROP DATABASE IF EXISTS uniconnect;
 
 -- Create Database

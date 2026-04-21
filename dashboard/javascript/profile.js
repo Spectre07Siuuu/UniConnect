@@ -52,8 +52,8 @@ function addSelectedSkill() {
     }
 
     const skillsList = document.querySelector('.skills-list');
-    // Check for existing skills to prevent duplicates in UI
-    const existingSkills = Array.from(skillsList.querySelectorAll('.skill-name')).map(s => s.textContent.trim().toLowerCase());
+    // Check for existing skills using data attributes for reliable duplicate detection
+    const existingSkills = Array.from(skillsList.querySelectorAll('.skill-card')).map(c => (c.dataset.skillName || '').toLowerCase());
 
     if (existingSkills.includes(skill.toLowerCase())) {
         alert('This skill has already been added.');
@@ -70,7 +70,7 @@ function addSelectedSkill() {
         confirmAddSkillButton.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Adding...';
         confirmAddSkillButton.disabled = true;
 
-        fetch('profile.php', {
+        csrfFetch('profile.php', {
             method: 'POST',
             body: formData
         })
@@ -106,16 +106,18 @@ function addSkillCard(skillName) {
     if (!skillsList) { console.error("Skills list container not found."); return; }
     const card = document.createElement('div');
     card.className = 'skill-card';
-
-    // Escape skillName for proper use in onclick attribute to prevent syntax errors
-    const escapedSkillName = skillName.replace(/'/g, "\\'");
+    // Store the raw skill name in a data attribute for reliable retrieval
+    card.dataset.skillName = skillName;
 
     card.innerHTML = `
         <span class="skill-name"><i class="mdi mdi-check-bold"></i> ${htmlspecialchars(skillName)}</span>
-        <button type="button" class="remove-button remove-icon" onclick="removeSkill('${escapedSkillName}')">
+        <button type="button" class="remove-button remove-icon">
             <i class="mdi mdi-close"></i>
         </button>
     `;
+    card.querySelector('.remove-button').addEventListener('click', function() {
+        removeSkill(skillName);
+    });
     skillsList.appendChild(card);
 }
 
@@ -129,17 +131,17 @@ function removeSkill(skill) {
     formData.append('action', 'remove_skill');
     formData.append('skill_name', skill);
 
-    fetch('profile.php', {
+    csrfFetch('profile.php', {
       method: 'POST',
       body: formData
     })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Remove the skill card from the UI
+        // Remove the skill card using the data attribute for reliable matching
         const skillCards = document.querySelectorAll('.skill-card');
         skillCards.forEach(card => {
-          if (card.querySelector('.skill-name') && card.querySelector('.skill-name').textContent.trim() === skill) {
+          if (card.dataset.skillName === skill) {
             card.remove();
           }
         });
@@ -309,14 +311,11 @@ function addSelectedCourse() {
     }
 
     const coursesList = document.querySelector('.courses-list');
-    // Check for existing courses to prevent duplicates in UI
-    const existingCourses = Array.from(coursesList.querySelectorAll('.course-card')).map(card => {
-        const name = card.querySelector('.course-name') ? card.querySelector('.course-name').textContent.trim() : '';
-        const secText = card.querySelector('.course-section') ? card.querySelector('.course-section').textContent.trim() : '';
-        const secMatch = secText.match(/Section (.*)/);
-        const sec = secMatch ? secMatch[1].trim() : '';
-        return { course_name: name, section: sec };
-    });
+    // Check for existing courses using data attributes for reliable duplicate detection
+    const existingCourses = Array.from(coursesList.querySelectorAll('.course-card')).map(card => ({
+        course_name: card.dataset.courseName || '',
+        section: card.dataset.section || ''
+    }));
 
     const courseExists = existingCourses.some(c => c.course_name.toLowerCase() === selectedCourse.toLowerCase() && c.section.toLowerCase() === section.toLowerCase());
     if (courseExists) {
@@ -335,7 +334,7 @@ function addSelectedCourse() {
         confirmAddCourseButton.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Adding...';
         confirmAddCourseButton.disabled = true;
 
-        fetch('profile.php', {
+        csrfFetch('profile.php', {
             method: 'POST',
             body: formData
         })
@@ -374,19 +373,22 @@ function addCourseCard(courseName, section) {
     const card = document.createElement('div');
     card.className = 'course-card';
 
-    // Escape courseName and section for proper use in onclick attribute
-    const escapedCourseName = courseName.replace(/'/g, "\\'");
-    const escapedSection = section.replace(/'/g, "\\'");
+    // Store raw values in data attributes for reliable retrieval
+    card.dataset.courseName = courseName;
+    card.dataset.section = section;
 
     card.innerHTML = `
         <div class="course-info">
             <span class="course-name"><i class="mdi mdi-book-open-variant"></i> ${htmlspecialchars(courseName)}</span>
             <span class="course-section"><i class="mdi mdi-tag"></i> Section ${htmlspecialchars(section)}</span>
         </div>
-        <button type="button" class="remove-button remove-icon" onclick="removeCourse('${escapedCourseName}', '${escapedSection}')">
+        <button type="button" class="remove-button remove-icon">
             <i class="mdi mdi-close"></i>
         </button>
     `;
+    card.querySelector('.remove-button').addEventListener('click', function() {
+        removeCourse(courseName, section);
+    });
     coursesList.appendChild(card);
 }
 
@@ -402,22 +404,17 @@ function removeCourse(course, section) {
     formData.append('course_name', course);
     formData.append('section', section); // Pass section for accurate removal
 
-    fetch('profile.php', {
+    csrfFetch('profile.php', {
       method: 'POST',
       body: formData
     })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Remove the course card from the UI
+        // Remove the course card using data attributes for reliable matching
         const courseCards = document.querySelectorAll('.course-card');
         courseCards.forEach(card => {
-          const cardCourseName = card.querySelector('.course-name') ? card.querySelector('.course-name').textContent.trim() : '';
-          const cardSectionText = card.querySelector('.course-section') ? card.querySelector('.course-section').textContent.trim() : '';
-          const cardSectionMatch = cardSectionText.match(/Section (.*)/);
-          const cardSection = cardSectionMatch ? cardSectionMatch[1].trim() : '';
-
-          if (cardCourseName === course && cardSection === section) {
+          if (card.dataset.courseName === course && card.dataset.section === section) {
             card.remove();
           }
         });
@@ -449,9 +446,29 @@ function htmlspecialchars(text) {
     return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-
 // --- Event Listeners ---
 document.addEventListener('DOMContentLoaded', function() {
+    // Bind remove buttons on server-rendered skill cards (cards added dynamically via addSkillCard
+    // already get their listeners attached directly in that function)
+    document.querySelectorAll('.skills-list .skill-card').forEach(function(card) {
+        const btn = card.querySelector('.remove-button');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                removeSkill(card.dataset.skillName);
+            });
+        }
+    });
+
+    // Bind remove buttons on server-rendered course cards
+    document.querySelectorAll('.courses-list .course-card').forEach(function(card) {
+        const btn = card.querySelector('.remove-button');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                removeCourse(card.dataset.courseName, card.dataset.section);
+            });
+        }
+    });
+
     // Event listener for opening skill modal
     const addSkillButton = document.querySelector('.content-section .section-header button[onclick="showSkillModal()"]');
     if (addSkillButton) {
@@ -540,21 +557,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const form = e.target;
             const formData = new FormData(form);
 
-            // Manually add skills data to the FormData
+            // Collect skills using data attributes for reliable retrieval
             const skills = [];
-            document.querySelectorAll('.skills-list .skill-card .skill-name').forEach(item => {
-                skills.push(item.textContent.trim());
+            document.querySelectorAll('.skills-list .skill-card').forEach(card => {
+                if (card.dataset.skillName) {
+                    skills.push(card.dataset.skillName);
+                }
             });
             formData.append('skills', JSON.stringify(skills));
 
-            // Manually add courses data to the FormData
+            // Collect courses using data attributes for reliable retrieval
             const courses = [];
             document.querySelectorAll('.courses-list .course-card').forEach(card => {
-                const courseName = card.querySelector('.course-name') ? card.querySelector('.course-name').textContent.trim() : '';
-                const sectionText = card.querySelector('.course-section') ? card.querySelector('.course-section').textContent.trim() : '';
-                const sectionMatch = sectionText.match(/Section (.*)/);
-                const section = sectionMatch ? sectionMatch[1].trim() : '';
-                courses.push({ course_name: courseName, section: section });
+                if (card.dataset.courseName && card.dataset.section) {
+                    courses.push({ course_name: card.dataset.courseName, section: card.dataset.section });
+                }
             });
             formData.append('courses', JSON.stringify(courses));
 
@@ -566,8 +583,8 @@ document.addEventListener('DOMContentLoaded', function() {
             saveButton.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Saving...';
             saveButton.disabled = true;
 
-            // Send the data using Fetch API
-            fetch('profile.php', {
+            // Send the data using csrfFetch
+            csrfFetch('profile.php', {
                 method: 'POST',
                 body: formData
             })
